@@ -1,4 +1,4 @@
-Taksov - Aplicación para la planificación de rutinas de entrenamiento
+# Taksov - Aplicación para la planificación de rutinas de entrenamiento
 Taksov es una aplicación backend desarrollada con Spring Boot que te permite crear y gestionar rutinas de entrenamiento. Puedes implementarla utilizando Docker. La aplicación utiliza autenticación basada en roles para controlar el acceso a las funcionalidades.
 
 ## Características Principales
