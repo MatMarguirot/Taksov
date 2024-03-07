@@ -1,0 +1,17 @@
+<configuration>
+    <appenders>
+        <console name="CONSOLE" target="System.out">
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </console>
+    </appenders>
+
+    <loggers>
+        <logger name="com.fasterxml.jackson" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE" />
+        </logger>
+    </loggers>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
