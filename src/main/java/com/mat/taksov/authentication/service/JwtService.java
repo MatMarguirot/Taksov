@@ -42,6 +42,11 @@ public class JwtService {
                 .compact(); //serializa el token
     }
 
+//    public String GenerateToken(User user){
+//        Map<String, Object> claims = new HashMap<>();
+//        return getToken(claims, user);
+//    }
+
     private Key getKey() {
         // byte arrays son usados generalmente porque data binaria es mas facilde manejar en criptografia
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY); // codifica la secret key

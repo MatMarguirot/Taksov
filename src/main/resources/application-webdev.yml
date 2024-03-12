@@ -12,9 +12,9 @@ MYSQL_PASSWORD: admin123
 MYSQL_PORT: 3306
 MYSQL_DATABASE: dbtaksov2
 MYSQL_HOST: localhost
-DDL_AUTO: create
+DDL_AUTO: update
 
 # CORS
 ALLOWED_ORIGINS: "http://localhost:4200"
-CSRF_ENABLED: true
+CSRF_ENABLED: false
   

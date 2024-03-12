@@ -1,7 +1,6 @@
 package com.mat.taksov.user.service;
 
 import com.mat.taksov.authentication.model.enums.Role;
-import com.mat.taksov.common.controller.AbstractLogged;
 import com.mat.taksov.common.exception.common.BadRequestException;
 import com.mat.taksov.common.exception.common.DataIntegrityViolationException;
 import com.mat.taksov.user.dto.mapper.UserMapper;
@@ -17,6 +16,7 @@ import com.mat.taksov.user.dto.admin.AdminUpdateUserDto;
 import com.mat.taksov.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +27,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminUserService extends AbstractLogged {
+@Slf4j
+public class AdminUserService {
     private final UserRepository userRepository;
 //    private final ModelMapper userMapper;
     private final UserMapper userMapper;
@@ -65,7 +66,7 @@ public class AdminUserService extends AbstractLogged {
             GetUserResponse res = userMapper.toGetUserResponse(newUser);
             return res;
         }catch(RuntimeException e){
-            logger.error("Error " + e);
+            log.error("Error " + e);
             if(e instanceof DataIntegrityViolationException){
                 throw new DataIntegrityViolationException();
             }
@@ -89,7 +90,7 @@ public class AdminUserService extends AbstractLogged {
     @Transactional(rollbackFor = Exception.class)
     public String updateUser(String id, AdminUpdateUserDto updateUserDto) {
             User user = userRepository.findById(id).orElseThrow(() -> {
-                logger.debug("Usuario no encontrado.");
+                log.debug("Usuario no encontrado.");
                 return new UserNotFoundException("UserNotFound");
             });
             String email = updateUserDto.getEmail();
@@ -99,22 +100,22 @@ public class AdminUserService extends AbstractLogged {
 
             if(username != null && !username.isBlank()){
                 if(!username.equals(user.getUsername()) && userRepository.existsByUsername(username)) throw new UsernameExistsException();
-                logger.debug("Nuevo username: " + username + ". Antiguo username: "+ user.getUsername() + ". Son iguales: " + String.valueOf(username.equals(user.getUsername())));
+                log.debug("Nuevo username: " + username + ". Antiguo username: "+ user.getUsername() + ". Son iguales: " + String.valueOf(username.equals(user.getUsername())));
                 user.setUsername(username);
             }
             if(email != null && !email.isBlank()){
                 if(!email.equals(user.getEmail()) && userRepository.existsByEmail(email)) throw new EmailExistsException();
-                logger.debug("Nuevo email: " + email +". Antiguo email: " + user.getEmail() + ". Son iguales: " + String.valueOf(email.equals(user.getEmail())));
+                log.debug("Nuevo email: " + email +". Antiguo email: " + user.getEmail() + ". Son iguales: " + String.valueOf(email.equals(user.getEmail())));
                 user.setEmail(email);
             }
             if(password != null && !password.isBlank()){
                 if(!passwordEncoder.matches(password, user.getPassword())){
-                    logger.debug("Nuevo password: " + password + ". Antiguo password: "+ user.getPassword() + ". Son iguales: " + String.valueOf(password.equals(user.getPassword())));
+                    log.debug("Nuevo password: " + password + ". Antiguo password: "+ user.getPassword() + ". Son iguales: " + String.valueOf(password.equals(user.getPassword())));
                     user.setPassword(passwordEncoder.encode(password));
                 }
             }
             if(role != null){
-                logger.debug("Nuevo rol: " + role + ". Antiguo rol: "+ user.getRole());
+                log.debug("Nuevo rol: " + role + ". Antiguo rol: "+ user.getRole());
                 user.setRole(role);
             }
 
@@ -141,11 +142,11 @@ public class AdminUserService extends AbstractLogged {
     public String updatePassword(String id, String password){
         if(!userRepository.existsById(id)) throw new UserNotFoundException();
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        logger.debug("Cambiando password de usuario "+user.getUsername());
-        logger.debug("Password en db: "+user.getPassword());
+        log.debug("Cambiando password de usuario "+user.getUsername());
+        log.debug("Password en db: "+user.getPassword());
         if(!passwordEncoder.matches(password, user.getPassword())) {
             String encodedPassword = passwordEncoder.encode(password);
-            logger.debug("Password encriptada: "+encodedPassword);
+            log.debug("Password encriptada: "+encodedPassword);
             userRepository.updateUserPassword(id, passwordEncoder.encode(password));
         }
         return id;
@@ -162,7 +163,7 @@ public class AdminUserService extends AbstractLogged {
     public String deleteUser(String id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> {
-                    logger.debug("Usuario no encontrado");
+                    log.debug("Usuario no encontrado");
                     throw new UserNotFoundException("Error al borrar usuario con id: "+id);
                 }
         );

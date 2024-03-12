@@ -49,7 +49,10 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("No se ha encontrado el usuario"));
+                .orElseThrow(() -> {
+                    System.out.println("NO SE HA ENCONTRADO AL USUARIO");
+                    return new UsernameNotFoundException("No se ha encontrado el usuario");
+                });
 
     }
 

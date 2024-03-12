@@ -1,22 +1,22 @@
 package com.mat.taksov.workout.exception;
 
-public class InvalidBulkWorkoutException extends RuntimeException{
-    public InvalidBulkWorkoutException() {
+public class InvalidBulkExerciseException extends RuntimeException{
+    public InvalidBulkExerciseException() {
     }
 
-    public InvalidBulkWorkoutException(String message) {
+    public InvalidBulkExerciseException(String message) {
         super(message);
     }
 
-    public InvalidBulkWorkoutException(String message, Throwable cause) {
+    public InvalidBulkExerciseException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public InvalidBulkWorkoutException(Throwable cause) {
+    public InvalidBulkExerciseException(Throwable cause) {
         super(cause);
     }
 
-    public InvalidBulkWorkoutException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public InvalidBulkExerciseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

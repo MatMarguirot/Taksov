@@ -1,13 +1,17 @@
 package com.mat.taksov.workout.service;
 
+import com.mat.taksov.workout.dto.ExerciseBulkDto;
 import com.mat.taksov.workout.dto.ExerciseDto;
+import com.mat.taksov.workout.exception.InvalidBulkExerciseException;
 import com.mat.taksov.workout.model.Exercise;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.repository.ExerciseRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,6 +19,7 @@ import java.util.List;
 public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
     private final MuscleGroupService muscleGroupService;
+    private final ModelMapper exerciseMapper;
 
     public Exercise findById(String id) {
         return exerciseRepository.findById(id).orElseThrow();
@@ -28,8 +33,10 @@ public class ExerciseService {
         exerciseRepository.deleteById(id);
     }
 
-    public List<Exercise> findAll() {
-        return exerciseRepository.findAll();
+    public List<ExerciseDto> findAll() {
+        List<Exercise> exercises = exerciseRepository.findAll();
+        List<ExerciseDto> exerciseDtoList = exercises.stream().map((exercise) -> exerciseMapper.map(exercise, ExerciseDto.class)).toList();
+        return exerciseDtoList;
     }
 
 //    public List<Exercise> findAllByMuscleGroupId(String muscleGroupId) {
@@ -68,6 +75,30 @@ public class ExerciseService {
         return newExercise;
 //        return exerciseRepository.save(exercise);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Exercise> createBulkExercise(List<ExerciseBulkDto> exercisesDto){
+        List<String> insertedExercises = new ArrayList<>();
+        List<Exercise> exercises = exercisesDto.stream()
+                .filter((exercise) -> {
+                        if(insertedExercises.contains(exercise.getName())) return false;
+                        if(exerciseRepository.existsByName(exercise.getName()) || !muscleGroupService.existsByName(exercise.getMuscleGroupName())) return false;
+                        insertedExercises.add(exercise.getName());
+                        return true;
+                }
+                )
+                .map((exercise) -> {
+                    MuscleGroup muscleGroup = muscleGroupService.findMuscleGroupModelByName(exercise.getMuscleGroupName());
+                    return Exercise.builder()
+                            .name(exercise.getName())
+                            .muscleGroup(muscleGroup)
+                            .build();
+                }).toList();
+        if(exercises.isEmpty()) throw new InvalidBulkExerciseException();
+        return exerciseRepository.saveAll(exercises);
+    }
+
+
 
 //    public Exercise saveExerciseModel(Exercise exercise) {
 //        return exerciseRepository.save(exercise);

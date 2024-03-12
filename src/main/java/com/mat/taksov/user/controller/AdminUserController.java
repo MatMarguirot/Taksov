@@ -1,7 +1,6 @@
 package com.mat.taksov.user.controller;
 
 import com.mat.taksov.authentication.model.enums.Role;
-import com.mat.taksov.common.controller.AbstractLogged;
 import com.mat.taksov.user.controller.request.GetUserResponse;
 import com.mat.taksov.user.dto.UpdateUserEmailDto;
 import com.mat.taksov.user.dto.UpdateUserRoleDto;
@@ -9,23 +8,22 @@ import com.mat.taksov.user.dto.UpdateUserUsernameDto;
 import com.mat.taksov.user.dto.admin.AdminCreateUserDto;
 import com.mat.taksov.user.dto.admin.AdminUpdateUserDto;
 import com.mat.taksov.user.dto.admin.GetUserDtoInterface;
-import com.mat.taksov.user.model.User;
 import com.mat.taksov.user.service.AdminUserService;
 //import com.mat.taksov.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/admin/users")
 @AllArgsConstructor
-public class AdminUserController extends AbstractLogged {
+@Slf4j
+public class AdminUserController {
     private final AdminUserService adminUserService;
 
     @GetMapping

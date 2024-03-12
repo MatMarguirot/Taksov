@@ -1,2 +1,48 @@
-package com.mat.taksov.workout.controller;public class MuscleGroupController {
+package com.mat.taksov.workout.controller;
+
+import com.mat.taksov.user.model.User;
+import com.mat.taksov.workout.dto.MuscleGroupBulkDto;
+import com.mat.taksov.workout.model.MuscleGroup;
+import com.mat.taksov.workout.service.MuscleGroupService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+import java.util.Map;
+
+@RequiredArgsConstructor
+@RequestMapping("muscle_group")
+@Controller
+@EnableMethodSecurity
+public class MuscleGroupController {
+    private final MuscleGroupService muscleGroupService;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<MuscleGroup>> getAllMuscleGroups() {
+        return ResponseEntity.ok(muscleGroupService.findAll());
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/bulk")
+    public ResponseEntity<Map<String,String>> bulkUploadMuscleGroups(
+            @AuthenticationPrincipal User user,
+            @Valid @RequestBody List<MuscleGroupBulkDto> muscleGroupBulkDtos
+            ){
+
+        return ResponseEntity.ok(muscleGroupService.createBulkMuscleGroup(muscleGroupBulkDtos));
+
+    }
+
+
+
 }

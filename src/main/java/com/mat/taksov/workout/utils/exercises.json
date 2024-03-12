@@ -1,478 +1,478 @@
 [
   {
-    "workout_name": "Press de banca (mancuernas)",
+    "exercise_name": "Press de banca (mancuernas)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press de banca (barra)",
+    "exercise_name": "Press de banca (barra)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Apertura (mancuernas)",
+    "exercise_name": "Apertura (mancuernas)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press inclinado (barra)",
+    "exercise_name": "Press inclinado (barra)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press inclinado (mancuernas)",
+    "exercise_name": "Press inclinado (mancuernas)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press declinado (barra)",
+    "exercise_name": "Press declinado (barra)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press declinado (mancuernas)",
+    "exercise_name": "Press declinado (mancuernas)",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Cruce de poleas",
+    "exercise_name": "Cruce de poleas",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Fondos",
+    "exercise_name": "Fondos",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Flworkout_nameiones de brazos",
+    "exercise_name": "Flexercise_nameiones de brazos",
     "muscle_group_name": "pecho"
   },
   {
-    "workout_name": "Press militar (barra)",
+    "exercise_name": "Press militar (barra)",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Press Arnold (mancuernas)",
+    "exercise_name": "Press Arnold (mancuernas)",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Elevaciones laterales (mancuernas)",
+    "exercise_name": "Elevaciones laterales (mancuernas)",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Elevaciones frontales",
+    "exercise_name": "Elevaciones frontales",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Remo al cuello",
+    "exercise_name": "Remo al cuello",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Face pulls",
+    "exercise_name": "Face pulls",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Elevaciones laterales (cable)",
+    "exercise_name": "Elevaciones laterales (cable)",
     "muscle_group_name": "hombros"
   },
   {
-    "workout_name": "Dominadas",
+    "exercise_name": "Dominadas",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Remo (barra)",
+    "exercise_name": "Remo (barra)",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Remo (mancuernas)",
+    "exercise_name": "Remo (mancuernas)",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Remo a un brazo (mancuernas)",
+    "exercise_name": "Remo a un brazo (mancuernas)",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Jalón al pecho",
+    "exercise_name": "Jalón al pecho",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Remo con polea baja",
+    "exercise_name": "Remo con polea baja",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Pullover (mancuernas)",
+    "exercise_name": "Pullover (mancuernas)",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Chin-Ups",
+    "exercise_name": "Chin-Ups",
     "muscle_group_name": "espalda"
   },
   {
-    "workout_name": "Encojimiento de hombros (barra)",
+    "exercise_name": "Encojimiento de hombros (barra)",
     "muscle_group_name": "trapecios"
   },
   {
-    "workout_name": "Encojimiento de hombros (mancuernas)",
+    "exercise_name": "Encojimiento de hombros (mancuernas)",
     "muscle_group_name": "trapecios"
   },
   {
-    "workout_name": "Paseo del granjero",
+    "exercise_name": "Paseo del granjero",
     "muscle_group_name": "trapecios"
   },
   {
-    "workout_name": "Remo alto en polea",
+    "exercise_name": "Remo alto en polea",
     "muscle_group_name": "trapecios"
   },
   {
-    "workout_name": "Curls (barra)",
+    "exercise_name": "Curls (barra)",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Curls (mancuernas)",
+    "exercise_name": "Curls (mancuernas)",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Curls con barra EZ",
+    "exercise_name": "Curls con barra EZ",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Curl martillo",
+    "exercise_name": "Curl martillo",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Curl predicador",
+    "exercise_name": "Curl predicador",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Curl con banda",
+    "exercise_name": "Curl con banda",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Chin-Ups",
+    "exercise_name": "Chin-Ups",
     "muscle_group_name": "bicep"
   },
   {
-    "workout_name": "Press francés (barra)",
+    "exercise_name": "Press francés (barra)",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "Fondos",
+    "exercise_name": "Fondos",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "workout_nametensiones de triceps (mancuernas)",
+    "exercise_name": "exercise_nametensiones de triceps (mancuernas)",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "Press francés (mancuernas)",
+    "exercise_name": "Press francés (mancuernas)",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "workout_nametensiones de triceps con polea alta",
+    "exercise_name": "exercise_nametensiones de triceps con polea alta",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "Kickbacks",
+    "exercise_name": "Kickbacks",
     "muscle_group_name": "triceps"
   },
   {
-    "workout_name": "Curl de martillo de muñeca",
+    "exercise_name": "Curl de martillo de muñeca",
     "muscle_group_name": "antebrazos"
   },
   {
-    "workout_name": "Curl de muñeca prono",
+    "exercise_name": "Curl de muñeca prono",
     "muscle_group_name": "antebrazos"
   },
   {
-    "workout_name": "Curl de muñeca supino",
+    "exercise_name": "Curl de muñeca supino",
     "muscle_group_name": "antebrazos"
   },
   {
-    "workout_name": "Agarre de pinza",
+    "exercise_name": "Agarre de pinza",
     "muscle_group_name": "antebrazos"
   },
   {
-    "workout_name": "Caminata del granjero",
+    "exercise_name": "Caminata del granjero",
     "muscle_group_name": "antebrazos"
   },
   {
-    "workout_name": "Sentadillas",
+    "exercise_name": "Sentadillas",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Peso muerto rumano",
+    "exercise_name": "Peso muerto rumano",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Zancadas",
+    "exercise_name": "Zancadas",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Press de piernas",
+    "exercise_name": "Press de piernas",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "workout_nametensiones de piernas",
+    "exercise_name": "exercise_nametensiones de piernas",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Elevaciones de talones de pie",
+    "exercise_name": "Elevaciones de talones de pie",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Sentadillas frontales",
+    "exercise_name": "Sentadillas frontales",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Sentadillas búlgaras",
+    "exercise_name": "Sentadillas búlgaras",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Prensa de piernas con una pierna",
+    "exercise_name": "Prensa de piernas con una pierna",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "workout_nametensiones de piernas tumbado",
+    "exercise_name": "exercise_nametensiones de piernas tumbado",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Sentadillas Hack",
+    "exercise_name": "Sentadillas Hack",
     "muscle_group_name": "cuádriceps"
   },
   {
-    "workout_name": "Sentadillas con barra",
+    "exercise_name": "Sentadillas con barra",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Sentadillas con mancuernas",
+    "exercise_name": "Sentadillas con mancuernas",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Peso muerto",
+    "exercise_name": "Peso muerto",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Hip thrust",
+    "exercise_name": "Hip thrust",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Puente de glúteos",
+    "exercise_name": "Puente de glúteos",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "workout_nametensiones de cadera",
+    "exercise_name": "exercise_nametensiones de cadera",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Elevaciones de talones de pie",
+    "exercise_name": "Elevaciones de talones de pie",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Elevaciones de talones con una pierna",
+    "exercise_name": "Elevaciones de talones con una pierna",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Patadas de glúteos",
+    "exercise_name": "Patadas de glúteos",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Zancadas",
+    "exercise_name": "Zancadas",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Monster Walk",
+    "exercise_name": "Monster Walk",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Sentadillas búlgaras",
+    "exercise_name": "Sentadillas búlgaras",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Sentadillas frontales",
+    "exercise_name": "Sentadillas frontales",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Prensa de piernas",
+    "exercise_name": "Prensa de piernas",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "workout_nametensiones de piernas",
+    "exercise_name": "exercise_nametensiones de piernas",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Remo con barra",
+    "exercise_name": "Remo con barra",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Peso muerto rumano",
+    "exercise_name": "Peso muerto rumano",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Skipping",
+    "exercise_name": "Skipping",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Burpees",
+    "exercise_name": "Burpees",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Saltos de tijera",
+    "exercise_name": "Saltos de tijera",
     "muscle_group_name": "glúteos"
   },
   {
-    "workout_name": "Elevaciones de talones de pie",
+    "exercise_name": "Elevaciones de talones de pie",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Elevaciones de talones sentado",
+    "exercise_name": "Elevaciones de talones sentado",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Elevaciones de talones con una pierna",
+    "exercise_name": "Elevaciones de talones con una pierna",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Burpees",
+    "exercise_name": "Burpees",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Saltos de tijera",
+    "exercise_name": "Saltos de tijera",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Carrera a pie",
+    "exercise_name": "Carrera a pie",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Escalera",
+    "exercise_name": "Escalera",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Elevaciones de talones con banda de resistencia",
+    "exercise_name": "Elevaciones de talones con banda de resistencia",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Elevaciones de talones con mancuernas",
+    "exercise_name": "Elevaciones de talones con mancuernas",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Elevaciones de talones en máquina",
+    "exercise_name": "Elevaciones de talones en máquina",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Skipping",
+    "exercise_name": "Skipping",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Remo con barra",
+    "exercise_name": "Remo con barra",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Peso muerto",
+    "exercise_name": "Peso muerto",
     "muscle_group_name": "pantorrillas"
   },
   {
-    "workout_name": "Peso muerto",
+    "exercise_name": "Peso muerto",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Curl femoral tumbado",
+    "exercise_name": "Curl femoral tumbado",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Curl femoral sentado",
+    "exercise_name": "Curl femoral sentado",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "workout_nametensiones de piernas",
+    "exercise_name": "exercise_nametensiones de piernas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Elevaciones de talones de pie",
+    "exercise_name": "Elevaciones de talones de pie",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Elevaciones de talones con una pierna",
+    "exercise_name": "Elevaciones de talones con una pierna",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Good Mornings",
+    "exercise_name": "Good Mornings",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Puente de glúteos con piernas elevadas",
+    "exercise_name": "Puente de glúteos con piernas elevadas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Hip thrust con piernas elevadas",
+    "exercise_name": "Hip thrust con piernas elevadas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Sentadillas con barra",
+    "exercise_name": "Sentadillas con barra",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Sentadillas con mancuernas",
+    "exercise_name": "Sentadillas con mancuernas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Zancadas",
+    "exercise_name": "Zancadas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Remo con barra",
+    "exercise_name": "Remo con barra",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Remo con mancuernas",
+    "exercise_name": "Remo con mancuernas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Press de banca con agarre cerrado",
+    "exercise_name": "Press de banca con agarre cerrado",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Fondos en paralelas",
+    "exercise_name": "Fondos en paralelas",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Dips en banco",
+    "exercise_name": "Dips en banco",
     "muscle_group_name": "isquiotibiales"
   },
   {
-    "workout_name": "Plancha abdominal",
+    "exercise_name": "Plancha abdominal",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Elevaciones de piernas colgado",
+    "exercise_name": "Elevaciones de piernas colgado",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Elevaciones de tronco tumbado",
+    "exercise_name": "Elevaciones de tronco tumbado",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Mountain climbers",
+    "exercise_name": "Mountain climbers",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Russian twist",
+    "exercise_name": "Russian twist",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Tijeras",
+    "exercise_name": "Tijeras",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Bicicleta",
+    "exercise_name": "Bicicleta",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Crunch abdominal",
+    "exercise_name": "Crunch abdominal",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Crunch inverso",
+    "exercise_name": "Crunch inverso",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Remo con polea alta",
+    "exercise_name": "Remo con polea alta",
     "muscle_group_name": "abdominales"
   },
   {
-    "workout_name": "Remo con banda de resistencia",
+    "exercise_name": "Remo con banda de resistencia",
     "muscle_group_name": "abdominales"
   }
 ]

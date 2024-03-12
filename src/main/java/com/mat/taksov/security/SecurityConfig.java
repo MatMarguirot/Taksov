@@ -24,15 +24,12 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-
     @Value("${spring.security.cors.allowed-origins}")
     private String[] allowedOrigins;
     @Value("${spring.security.csrf}")
     private boolean csrfEnabled;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers(
+                                        "/auth/refresh_token",
                                         "/auth/login",
                                         "/auth/signup",
                                         "/home",

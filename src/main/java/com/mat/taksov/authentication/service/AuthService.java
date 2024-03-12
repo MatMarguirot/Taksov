@@ -4,6 +4,7 @@ package com.mat.taksov.authentication.service;
 import com.mat.taksov.authentication.dto.AuthResponse;
 import com.mat.taksov.authentication.dto.LoginRequest;
 import com.mat.taksov.authentication.dto.SignupRequest;
+import com.mat.taksov.authentication.model.enums.RefreshToken;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.authentication.model.enums.Role;
 import com.mat.taksov.common.exception.common.BadRequestException;
@@ -20,13 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Service
@@ -37,6 +34,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final ModelMapper userMapper;
     private final JwtService jwtService;
+//    private final RefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
@@ -44,32 +42,31 @@ public class AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.getToken(user);
+//        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getUsername());
         return AuthResponse.builder()
-                .token(token)
+                .accessToken(token)
+//                .refreshToken(refreshToken.getToken())
                 .build();
     }
 
     @Transactional(rollbackFor = Exception.class)
     public AuthResponse signup(SignupRequest request){
-        if(userRepository.existsByUsername(request.getUsername())){
-            throw new UsernameExistsException();
-        }
-        if(userRepository.existsByEmail(request.getEmail())){
-            throw new EmailExistsException();
-        }
+        if(userRepository.existsByUsername(request.getUsername())) throw new UsernameExistsException();
+        if(userRepository.existsByEmail(request.getEmail())) throw new EmailExistsException();
 
-        // persistencia
         try{
-            User newUser = userMapper.map(request, User.class);
+            User user = userMapper.map(request, User.class);
             if(userRepository.count() < 1) {
-                newUser.setRole(Role.ADMIN);
+                user.setRole(Role.ADMIN);
             }else{
-                newUser.setRole(Role.USER);
+                user.setRole(Role.USER);
             }
-            newUser.setPassword(passwordEncoder.encode(request.getPassword()));
-            String newUserId = userRepository.save(newUser).getId();
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            User newUser = userRepository.save(user);
+//            RefreshToken refreshToken = refreshTokenService.createRefreshTokenForNewUser(newUser);
             AuthResponse res = AuthResponse.builder()
-                    .token(jwtService.getToken(newUser))
+                    .accessToken(jwtService.getToken(user))
+//                    .refreshToken(refreshToken.getToken())
 //                    .id(newUserId)
                     .build();
             return res;
@@ -84,6 +81,7 @@ public class AuthService {
             throw new BadRequestException();
         }
     }
+
 
 }
 

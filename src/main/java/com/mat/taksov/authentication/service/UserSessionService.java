@@ -1,16 +1,17 @@
 package com.mat.taksov.authentication.service;
 
 import com.mat.taksov.authentication.model.enums.Role;
-import com.mat.taksov.common.controller.AbstractLogged;
 import com.mat.taksov.user.exception.UserNotFoundException;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class UserSessionService extends AbstractLogged {
+@Slf4j
+public class UserSessionService {
     private final UserRepository userRepository;
     public void assertLoggedUser(User user, String user_id){
         if(user.getRole().equals(Role.ADMIN)) {
@@ -18,13 +19,13 @@ public class UserSessionService extends AbstractLogged {
             return;
         }
 
-        logger.debug("current user id : "+user.getId());
-        logger.debug("entered id: "+user_id);
+        log.debug("current user id : "+user.getId());
+        log.debug("entered id: "+user_id);
 
         if(!user.getId().equals(user_id)){
-            logger.debug("Usuario no tiene permisos");
+            log.debug("Usuario no tiene permisos");
             throw new RuntimeException();
         }
-        logger.debug("Usuario tiene permiso");
+        log.debug("Usuario tiene permiso");
     }
 }
