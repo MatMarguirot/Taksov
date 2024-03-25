@@ -5,8 +5,10 @@ import com.mat.taksov.user.model.User;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +37,9 @@ public class ExerciseSet implements Serializable {
     @ManyToOne(targetEntity = WorkoutSession.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_id", referencedColumnName = "id", nullable = false)
     private WorkoutSession workoutSession;
+
+    @CreationTimestamp
+    private Date created;
 
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "muscle_group_id")

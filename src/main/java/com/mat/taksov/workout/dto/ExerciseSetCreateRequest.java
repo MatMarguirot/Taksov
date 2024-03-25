@@ -19,15 +19,15 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExerciseSetCreateRequest {
-    @JsonAlias("exercise")
+    @JsonAlias("exercise_id")
     @NotNull
     @Valid
-    private ExerciseDto exerciseDto;
+    private String exerciseId = "";
 
     private String description = "";
     private long weight;
     private long reps;
-    @JsonAlias("workout_session")
+    @JsonAlias("workout_session_id")
     @Nullable
     private String workoutSessionId = "";
 }

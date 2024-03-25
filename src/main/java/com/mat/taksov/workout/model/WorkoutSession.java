@@ -51,7 +51,7 @@ public class WorkoutSession implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "workoutSession", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<ExerciseSet> exerciseSets = new HashSet<>();
+    private Set<ExerciseSet> exerciseSets = new HashSet<>(); //
 
     private Duration duration;
 
@@ -69,6 +69,12 @@ public class WorkoutSession implements Serializable {
         }else{
             throw new IllegalArgumentException("LA FECHA DE INICIO NO PUEDE SER MAYOR A LA FECHA DE TERMINO");
         }
+    }
+
+    public void addExerciseSet(ExerciseSet exerciseSet){
+        exerciseSets.add(exerciseSet);
+        updateMuscleGroups();
+
     }
 
     public void addMuscleGroup(MuscleGroup muscleGroup){
@@ -96,10 +102,11 @@ public class WorkoutSession implements Serializable {
     }
 
     public void updateMuscleGroups(){
+        this.muscleGroups.clear();
+
         if(this.exerciseSets.isEmpty()){
             return;
         }
-        this.muscleGroups.clear();
 
         this.muscleGroups = this.exerciseSets.stream()
                 .map(exerciseSet -> {

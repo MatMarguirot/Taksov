@@ -42,7 +42,7 @@ public class ExerciseSetController {
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
-            @PageableDefault(page = 0, size = 10, sort = {"startDate"} ) Pageable pageable
+            @PageableDefault(page = 0, size = 10, sort = {"created"} ) Pageable pageable
     ){
         userSessionService.assertLoggedUser(user, userId);
         return ResponseEntity.ok(exerciseSetService.getAllExerciseSets(pageable));
