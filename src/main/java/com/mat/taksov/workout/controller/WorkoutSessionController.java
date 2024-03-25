@@ -5,18 +5,22 @@ import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.MuscleGroupDto;
 import com.mat.taksov.workout.dto.WorkoutSession.*;
 import com.mat.taksov.workout.service.WorkoutSessionService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("workout")
-@Controller
+@RequestMapping("/workout")
+@RestController
+@Tag(name = "WorkoutSession Management (user)")
 public class WorkoutSessionController {
     private final WorkoutSessionService workoutSessionService;
     private final UserSessionService userSessionService;
@@ -32,7 +36,7 @@ public class WorkoutSessionController {
     @GetMapping("/all")
     public ResponseEntity<Page<WorkoutSessionResponse>> getOwnWorkoutSessions(
             @AuthenticationPrincipal User user,
-            Pageable pageable
+            @PageableDefault(page = 0, size = 5) Pageable pageable
     ){
         return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable));
     }

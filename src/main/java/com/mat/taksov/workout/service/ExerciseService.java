@@ -7,6 +7,7 @@ import com.mat.taksov.workout.model.Exercise;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.repository.ExerciseRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
     private final MuscleGroupService muscleGroupService;
@@ -36,6 +38,7 @@ public class ExerciseService {
     public List<ExerciseDto> findAll() {
         List<Exercise> exercises = exerciseRepository.findAll();
         List<ExerciseDto> exerciseDtoList = exercises.stream().map((exercise) -> exerciseMapper.map(exercise, ExerciseDto.class)).toList();
+        log.info("Enviando ejercicios. Items: " + exerciseDtoList.size());
         return exerciseDtoList;
     }
 
@@ -116,4 +119,7 @@ public class ExerciseService {
 //        return exerciseRepository.findAllByMuscleGroupId(muscleGroupId).orElseThrow(ExerciseNotFoundException::new);
 //    }
 
+    public void deleteAll(){
+        exerciseRepository.deleteAll();
+    }
 }

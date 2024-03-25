@@ -6,10 +6,14 @@ import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.ExerciseSetResponse;
 import com.mat.taksov.workout.exception.ExerciseSetNotFoundException;
 import com.mat.taksov.workout.service.ExerciseSetService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RequestMapping("/user/{user_id}/workout/{workout_id}/exercise_set")
-@Controller
+@RestController
+@Tag(name = "ExerciseSet Management")
 public class ExerciseSetController {
     private final ExerciseSetService exerciseSetService;
     private final UserSessionService userSessionService;
@@ -37,7 +42,7 @@ public class ExerciseSetController {
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
-            Pageable pageable
+            @PageableDefault(page = 0, size = 10, sort = {"startDate"} ) Pageable pageable
     ){
         userSessionService.assertLoggedUser(user, userId);
         return ResponseEntity.ok(exerciseSetService.getAllExerciseSets(pageable));

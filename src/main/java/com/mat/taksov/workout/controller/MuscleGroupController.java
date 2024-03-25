@@ -4,6 +4,7 @@ import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.MuscleGroupBulkDto;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.service.MuscleGroupService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -12,18 +13,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RequestMapping("muscle_group")
-@Controller
+@RequestMapping("/muscle_group")
+@RestController
 @EnableMethodSecurity
+@Tag(name = "MuscleGroup Management")
 public class MuscleGroupController {
     private final MuscleGroupService muscleGroupService;
 

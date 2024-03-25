@@ -6,6 +6,8 @@ import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.service.WorkoutSessionService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,9 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-//@RequestMapping("user/{user_id}/workout")
-@Controller
+//@RequestMapping("/user/{user_id}/workout")
+@RestController
 @EnableMethodSecurity
+@Tag(name = "Workout Session Management (admin)")
 public class AdminWorkoutSessionController {
     private final WorkoutSessionService workoutSessionService;
     private final UserSessionService userSessionService;

@@ -8,6 +8,7 @@ import com.mat.taksov.authentication.model.enums.RefreshTokenRequestDto;
 import com.mat.taksov.authentication.service.AuthService;
 import com.mat.taksov.authentication.service.JwtService;
 import com.mat.taksov.authentication.service.RefreshTokenService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class AuthenticationController {
 
     private final AuthService authService;
@@ -38,8 +40,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.signup(request));
     }
 
-//    @PostMapping("/refresh_token")
-//    public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDTO){
+    @PostMapping("/refresh_token")
+    public ResponseEntity<String> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDTO){
 //        AuthResponse res = refreshTokenService.findByToken(refreshTokenRequestDTO.getToken())
 //                .map(refreshTokenService::verifyExpiration)
 //                .map(RefreshToken::getUser)
@@ -49,6 +51,6 @@ public class AuthenticationController {
 //                            .accessToken(accessToken)
 //                            .accessToken(refreshTokenRequestDTO.getToken()).build();
 //                }).orElseThrow(() ->new RuntimeException("No se encontró refresh token en DB"));
-//        return ResponseEntity.ok(res);
-//    }
+        return ResponseEntity.ok("ok");
+    }
 }

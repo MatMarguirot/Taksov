@@ -10,6 +10,7 @@ import com.mat.taksov.user.dto.admin.AdminUpdateUserDto;
 import com.mat.taksov.user.dto.admin.GetUserDtoInterface;
 import com.mat.taksov.user.service.AdminUserService;
 //import com.mat.taksov.user.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/admin/users")
 @AllArgsConstructor
 @Slf4j
+@Tag(name = "User Management (admin)")
 public class AdminUserController {
     private final AdminUserService adminUserService;
 
