@@ -1,6 +1,8 @@
 package com.mat.taksov.workout.service;
 
 import com.mat.taksov.user.model.User;
+import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSetResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
@@ -11,6 +13,7 @@ import com.mat.taksov.workout.exception.WorkoutNotFoundException;
 import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.WorkoutSession;
+import com.mat.taksov.workout.model.WorkoutsessionUpdateExerciseSetsRequest;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import com.mat.taksov.workout.repository.WorkoutSessionRepository;
 import lombok.AllArgsConstructor;
@@ -34,6 +37,7 @@ public class WorkoutSessionService {
         User user = new User();
         user.setId(userId);
         WorkoutSession createdWorkoutSession = workoutSessionRepository.save(workoutSessionMapper.toWorkoutSession(workoutSessionCreateRequest, user));
+        createdWorkoutSession.getExerciseSets();
         return workoutSessionMapper.toGetWorkoutSessionFullResponse(createdWorkoutSession);
     }
 
@@ -229,6 +233,31 @@ public class WorkoutSessionService {
         log.info("WorkoutSession actualizado con éxito.");
     }
 
+//    @Transactional(rollbackFor = Exception.class)
+//    public WorkoutSessionResponse updateWorkoutSessionExerciseSets(String userId, String workoutSessionId, WorkoutsessionUpdateExerciseSetsRequest exerciseSetsRequest){
+//        WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
+//         exerciseSetsRequest.getExerciseSets()
+//        workoutSession.setExerciseSets();
+//
+//        var res = workoutSessionRepository.save(workoutSession);
+//        return workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
+//
+//    }
+
+//    @Transactional(rollbackFor = Exception.class)
+//    public WorkoutSessionResponse addWorkoutSessionExerciseSet(String userId, String workoutSessionId, ExerciseSetCreateRequest exerciseSetsRequest){
+//        WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
+//        workoutSession.setExerciseSets(exerciseSetsRequest.getExerciseSets());
+//        var res = workoutSessionRepository.save(workoutSession);
+//        return workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
+//
+//    }
+
+    @Transactional(rollbackFor = Exception.class) // changes
+    public Page<WorkoutSession> getPendingWorkoutSessions(String userId, Pageable pageable){
+        Page<WorkoutSession> res = workoutSessionRepository.findByExcludeStatusAndUserId(WorkoutStatus.FINISHED, userId, pageable);
+        return res;
+    }
 
 
 //    @Transactional(readOnly = true)

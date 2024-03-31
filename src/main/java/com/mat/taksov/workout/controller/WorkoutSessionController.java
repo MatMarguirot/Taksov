@@ -2,13 +2,19 @@ package com.mat.taksov.workout.controller;
 
 import com.mat.taksov.authentication.service.UserSessionService;
 import com.mat.taksov.user.model.User;
+import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.MuscleGroupDto;
 import com.mat.taksov.workout.dto.WorkoutSession.*;
+import com.mat.taksov.workout.model.ExerciseSet;
+import com.mat.taksov.workout.model.WorkoutSession;
+import com.mat.taksov.workout.model.WorkoutsessionUpdateExerciseSetsRequest;
+import com.mat.taksov.workout.service.WorkoutSessionExerciseSetService;
 import com.mat.taksov.workout.service.WorkoutSessionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +23,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/workout")
 @RestController
@@ -24,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 public class WorkoutSessionController {
     private final WorkoutSessionService workoutSessionService;
     private final UserSessionService userSessionService;
+    private final WorkoutSessionExerciseSetService workoutSessionExerciseSetService;
 
     @PostMapping("/create")
     public ResponseEntity<WorkoutSessionFullResponse> createOwnWorkoutSession (
@@ -135,6 +144,25 @@ public class WorkoutSessionController {
         return ResponseEntity.ok(workoutSessionService.updateWorkoutSessionStartTime(workoutId, user.getId(), updateStartTimeRequest.getStartTime()));
     }
 
+//    @PatchMapping("/{workout_id}/addExerciseSet")
+//    public ResponseEntity<WorkoutSessionResponse> addExerciseSetForWorkoutSession(
+//            @PathVariable("workout_id") String workoutId,
+//            @AuthenticationPrincipal User user,
+//            @Valid @RequestBody ExerciseSetCreateRequest updateExerciseSetsRequest
+//    ){
+//        return ResponseEntity.ok(workoutSessionService.addWorkoutSessionExerciseSet(user.getId(), workoutId, updateExerciseSetsRequest));
+//
+//    }
+    @PatchMapping("/{workout_id}/exerciseSets")
+    public ResponseEntity<WorkoutSessionFullResponse> updateWorkoutSessionExerciseSets(
+            @PathVariable("workout_id") String workoutId,
+            @AuthenticationPrincipal User user,
+            @Valid @RequestBody List<ExerciseSetCreateRequest> updateExerciseSetsRequest
+//            @Valid @RequestBody WorkoutsessionUpdateExerciseSetsRequest updateExerciseSetsRequest
+    ){
+        return ResponseEntity.ok(workoutSessionExerciseSetService.updateWorkoutSessionExerciseSets(workoutId, user.getId(), updateExerciseSetsRequest));
+    }
+
     @PatchMapping("/{workout_id}/end_time")
     public ResponseEntity<WorkoutSessionResponse> updateWorkoutSessionEndTime(
             @PathVariable("workout_id") String workoutId,
@@ -143,6 +171,23 @@ public class WorkoutSessionController {
     ){
         return ResponseEntity.ok(workoutSessionService.updateWorkoutSessionEndTime(workoutId, user.getId(), updateEndTimeRequest.getEndTime()));
     }
+
+    @GetMapping("/current") // changes
+    public ResponseEntity<Page<WorkoutSession>> getCurrentWorkouts(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(page = 0, size = 5, sort = {"startTime"}) Pageable pageable
+    ){
+        return ResponseEntity.ok(workoutSessionService.getPendingWorkoutSessions(user.getId(), pageable));
+    }
+
+//    @PostMapping("/{workout_id}/addSet")
+//    public ResponseEntity<WorkoutSessionResponse> addSet(
+//            @AuthenticationPrincipal User user,
+//            @PathVariable("workout_id") String workoutSessionId,
+//            @Valid @RequestBody ExerciseSetCreateRequest exerciseSet
+//            ){
+//        workoutSessionService.addExerciseSetToWorkoutSession(user.getId(), workoutSessionId, exerciseSet);
+//    }
 
 //    @PatchMapping("/{workout_id}/muscle_group")
 //    public ResponseEntity<WorkoutSessionResponse> updateWorkoutSessionMuscleGroup(

@@ -71,10 +71,24 @@ public class WorkoutSession implements Serializable {
         }
     }
 
+    public void setExerciseSets(Set<ExerciseSet> exerciseSets){ // maybe not use setter
+        try {
+            if(exerciseSets.isEmpty()){
+            this.exerciseSets = exerciseSets;
+            }else{
+                this.exerciseSets.clear();
+                this.exerciseSets.addAll(exerciseSets);
+            }
+            updateMuscleGroups();
+
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
     public void addExerciseSet(ExerciseSet exerciseSet){
         exerciseSets.add(exerciseSet);
         updateMuscleGroups();
-
     }
 
     public void addMuscleGroup(MuscleGroup muscleGroup){
@@ -108,14 +122,21 @@ public class WorkoutSession implements Serializable {
             return;
         }
 
-        this.muscleGroups = this.exerciseSets.stream()
-                .map(exerciseSet -> {
-                    MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
-                    if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
-                    return muscleGroup;
-                })
-                .distinct()
-                .collect(Collectors.toSet());
+//        this.muscleGroups = this.exerciseSets.stream()
+//                .map(exerciseSet -> {
+//                    MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
+//                    if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
+//                    return muscleGroup;
+//                })
+//                .distinct()
+//                .collect(Collectors.toSet());
+
+        //alt
+        for(ExerciseSet exerciseSet : this.exerciseSets){
+            MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
+            if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
+            this.muscleGroups.add(muscleGroup);
+        }
 
     }
 

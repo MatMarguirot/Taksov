@@ -36,7 +36,6 @@ public class ExerciseSetService {
         WorkoutSession workoutSession = workoutSessionService.getWorkoutSessionModelByIdAndUserId(workoutSessionId, userId);
 
         // llama al servicio de ejercicio para crear el ejercicio si no existe
-//        Exercise exercise = exerciseService.findOrCreateExerciseModelByExerciseDto(exerciseSetCreateRequest.getExerciseDto());
         Exercise exercise = exerciseService.findById(exerciseSetCreateRequest.getExerciseId());
 
         ExerciseSet exerciseSet = exerciseSetMapper.toExerciseSet(exerciseSetCreateRequest, exercise);

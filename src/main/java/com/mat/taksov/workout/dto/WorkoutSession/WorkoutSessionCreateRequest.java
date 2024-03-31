@@ -2,6 +2,7 @@ package com.mat.taksov.workout.dto.WorkoutSession;
 
 import com.mat.taksov.user.model.Task;
 import com.mat.taksov.workout.dto.MuscleGroupDto;
+import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,7 @@ public class WorkoutSessionCreateRequest {
     private LocalDateTime startTime = LocalDateTime.now();
     private LocalDateTime endTime = null;
     private WorkoutStatus status = WorkoutStatus.TO_DO;
-//    private String user_id;
+    private String user_id;
     private Duration duration = Duration.ZERO;
     private Set<MuscleGroupDto> muscleGroups = new HashSet<>();
 }

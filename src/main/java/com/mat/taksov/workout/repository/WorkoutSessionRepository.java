@@ -1,6 +1,7 @@
 package com.mat.taksov.workout.repository;
 
 import com.mat.taksov.workout.model.WorkoutSession;
+import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,10 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
 
     Optional<Page<WorkoutSession>> findByUserId(String userId, Pageable pageable);
     Optional<List<WorkoutSession>> findByUserId(String userId);
+
+    Page<WorkoutSession> findByStatusAndUserId(WorkoutStatus status, String userId, Pageable pageable);
+    @Query("SELECT w FROM WorkoutSession w WHERE w.status != :status AND w.id = :user_id") // changes
+    Page<WorkoutSession> findByExcludeStatusAndUserId(@Param("status") WorkoutStatus excludedStatus, @Param("user_id") String userId, Pageable pageable);
 
     int countByUserId(String userId);
 

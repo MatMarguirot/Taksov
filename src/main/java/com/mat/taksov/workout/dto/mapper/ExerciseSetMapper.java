@@ -24,6 +24,8 @@ public class ExerciseSetMapper {
 //        exerciseSet.updateMuscleGroup();
         return exerciseSet;
     }
+
+    // para actualizacion de WorkoutSession
     public ExerciseSet toExerciseSet(ExerciseSetCreateRequest exerciseSetCreateRequest, Exercise exercise) {
         ExerciseSet exerciseSet = modelMapper.map(exerciseSetCreateRequest, ExerciseSet.class);
         exerciseSet.setExercise(exercise);

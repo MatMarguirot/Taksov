@@ -30,7 +30,7 @@ public class Exercise implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exercise")
     @JsonBackReference
-    private Set<ExerciseSet> exerciseSets = new HashSet<>();
+    private Set<ExerciseSet> exerciseSets;// = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "muscle_group_id")
