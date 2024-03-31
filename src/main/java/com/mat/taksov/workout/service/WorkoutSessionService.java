@@ -54,11 +54,24 @@ public class WorkoutSessionService {
         return workoutSessionRes;
     }
 
-    public Page<WorkoutSessionResponse> getWorkoutSessionsByUser(String userId, Pageable pageable){
-        Page<WorkoutSession> workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
+    public Page<WorkoutSessionResponse> getWorkoutSessionsByUser(String userId, Pageable pageable, boolean withSets){
+        Page<WorkoutSession> workoutSessions;
+        if(withSets){
+            workoutSessions = workoutSessionRepository.findByUserIdWithSets(userId, pageable);
+        }else workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
         Page<WorkoutSessionResponse> workoutSessionsRes = workoutSessions.map(workoutSessionMapper::toGetWorkoutSessionResponse);
         return workoutSessionsRes;
     }
+
+    public WorkoutSessionResponse getLatestPendingWorkoutSession(String userId, boolean withSets){
+        WorkoutSession workoutSession;
+        if (withSets) {
+            workoutSession = workoutSessionRepository.findLatestWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
+        }else workoutSession = workoutSessionRepository.findLatestWorkoutByUserId(userId).orElseThrow(WorkoutNotFoundException::new);
+        return this.workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
+    }
+
+
 
 //    public Page<WorkoutSessionFullResponse> getWorkoutSessionsWithSetsByUser(String userId, Pageable pageable){
 //        Page<WorkoutSession> workoutSessions = workoutSessionRepository.findByUserIdWithSets(userId, pageable);
@@ -253,11 +266,12 @@ public class WorkoutSessionService {
 //
 //    }
 
-    @Transactional(rollbackFor = Exception.class) // changes
-    public Page<WorkoutSession> getPendingWorkoutSessions(String userId, Pageable pageable){
-        Page<WorkoutSession> res = workoutSessionRepository.findByExcludeStatusAndUserId(WorkoutStatus.FINISHED, userId, pageable);
-        return res;
-    }
+//    @Transactional(rollbackFor = Exception.class) // changes
+//    public Page<WorkoutSession> getPendingWorkoutSessions(String userId, Pageable pageable){
+////        Page<WorkoutSession> res = workoutSessionRepository.findByExcludeStatusAndUserId(WorkoutStatus.FINISHED, userId, pageable);
+//        Page<WorkoutSession> res = workoutSessionRepository.findAll(WorkoutStatus.FINISHED, userId, pageable);
+//        return res;
+//    }
 
 
 //    @Transactional(readOnly = true)

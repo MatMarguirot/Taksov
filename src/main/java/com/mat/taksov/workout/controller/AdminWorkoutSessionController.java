@@ -49,9 +49,10 @@ public class AdminWorkoutSessionController {
     public ResponseEntity<Page<WorkoutSessionResponse>> getAllWorkoutSessionsByUser(
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId,
+            @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets,
             Pageable pageable
     ){
-        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(userId, pageable));
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(userId, pageable, withSets));
     }
 
     @GetMapping(urlString+"/{workout_id}")

@@ -17,15 +17,31 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
 
     @Query("select w from WorkoutSession w where w.id = :workout_id and w.user.id = :user_id")
     Optional<WorkoutSession> findByIdAndUserId(@Param("workout_id") String workoutId, @Param("user_id") String userId);
-    @Query("SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.user.id = :id")
-    Page<WorkoutSession> findByUserIdWithSets(@Param("id") String id, Pageable pageable);
+    @Query(
+            value = "SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.user.id = :user_id",
+            countQuery = "SELECT COUNT(w) FROM WorkoutSession w WHERE w.user.id = :user_id"
+    )
+    Page<WorkoutSession> findByUserIdWithSets(@Param("user_id") String id, Pageable pageable);
+
+    @Query("SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.user.id = :user_id ORDER BY w.startTime DESC limit 1")
+    Optional<WorkoutSession> findLatestWorkoutByUserIdWithSets(@Param("user_id") String id);
+
+    @Query("SELECT w FROM WorkoutSession w WHERE w.user.id = :user_id ORDER BY w.startTime DESC limit 1")
+    Optional<WorkoutSession> findLatestWorkoutByUserId(@Param("user_id") String id);
+
+
+    Optional<WorkoutSession> findLatestPendingByUserId(@Param("user_id") String id);
 
     Optional<Page<WorkoutSession>> findByUserId(String userId, Pageable pageable);
     Optional<List<WorkoutSession>> findByUserId(String userId);
 
     Page<WorkoutSession> findByStatusAndUserId(WorkoutStatus status, String userId, Pageable pageable);
+
     @Query("SELECT w FROM WorkoutSession w WHERE w.status != :status AND w.id = :user_id") // changes
     Page<WorkoutSession> findByExcludeStatusAndUserId(@Param("status") WorkoutStatus excludedStatus, @Param("user_id") String userId, Pageable pageable);
+
+//    @Query("SELECT w FROM WorkoutSession w WHERE w.status != :status AND w.id = :user_id ORDER BY w.startTime") // changes
+//    Page<WorkoutSession> findLatestPendingWorkout(@Param("status") WorkoutStatus excludedStatus, @Param("user_id") String userId, Pageable pageable);
 
     int countByUserId(String userId);
 

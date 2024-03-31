@@ -16,7 +16,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RequestMapping("/workout")
@@ -45,9 +48,14 @@ public class WorkoutSessionController {
     @GetMapping("/all")
     public ResponseEntity<Page<WorkoutSessionResponse>> getOwnWorkoutSessions(
             @AuthenticationPrincipal User user,
-            @PageableDefault(page = 0, size = 5) Pageable pageable
+            @PageableDefault(page = 0, size = 5, sort = {"startTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets
     ){
-        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable));
+        if(withSets){
+            pageable = PageRequest.of(pageable.getPageNumber(), 1, pageable.getSort());
+            workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable, withSets);
+        }
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable, withSets));
     }
 
     @GetMapping("/{workout_id}")
@@ -173,12 +181,14 @@ public class WorkoutSessionController {
     }
 
     @GetMapping("/current") // changes
-    public ResponseEntity<Page<WorkoutSession>> getCurrentWorkouts(
+    public ResponseEntity<WorkoutSessionResponse> getCurrentWorkout(
             @AuthenticationPrincipal User user,
-            @PageableDefault(page = 0, size = 5, sort = {"startTime"}) Pageable pageable
+            @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets
     ){
-        return ResponseEntity.ok(workoutSessionService.getPendingWorkoutSessions(user.getId(), pageable));
+//        workoutSessionService.getLatestPendingWorkoutSession(user.getId(), withSets);
+        return ResponseEntity.ok(workoutSessionService.getLatestPendingWorkoutSession(user.getId(), withSets));
     }
+
 
 //    @PostMapping("/{workout_id}/addSet")
 //    public ResponseEntity<WorkoutSessionResponse> addSet(

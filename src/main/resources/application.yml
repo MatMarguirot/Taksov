@@ -30,6 +30,9 @@ spring:
     csrf: ${CSRF_ENABLED}
 #      jmx.exposure.exclude: all
 #      web.exposure.include: health
+  data:
+    web.pageable:
+      max-page-size: 10
 logging:
   level:
     com.mat.taksov: debug
