@@ -2,6 +2,8 @@ package com.mat.taksov.workout.service;
 
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSetResponse;
+import com.mat.taksov.workout.dto.ExerciseSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.dto.mapper.ExerciseSetMapper;
@@ -54,6 +56,9 @@ public class WorkoutSessionExerciseSetService {
         Set<ExerciseSet> exerciseSets = updateExerciseSetsRequest.stream()
 //                .map(exerciseSetMapper::toExerciseSet)
                 .map((exerciseSet) -> {
+                    if(exerciseSet.getId()!=null){
+                        return exerciseSetRepository.findByIdAndUserId(exerciseSet.getId(), userId).orElseThrow(ExerciseSetNotFoundException::new);
+                    }
                     // obtiene ejercicios completos desde db, para poder actualizar muscleGroups
                     Exercise exercise = exerciseRepository.findById(exerciseSet.getExerciseId()).orElseThrow(ExerciseNotFoundException::new);
                     return exerciseSetMapper.toExerciseSet(exerciseSet, exercise);
@@ -62,10 +67,42 @@ public class WorkoutSessionExerciseSetService {
 
         // asigna exercise sets a workoutsession y actualiza muscle groups
         workoutSession.setExerciseSets(exerciseSets); // problem
-        WorkoutSession persistedWorkoutSession = workoutSessionRepository.save(workoutSession);
-        persistedWorkoutSession.getExerciseSets();
+        WorkoutSession persistedWorkoutSession = workoutSessionRepository.saveAndFlush(workoutSession);
 //        return workoutSessionMapper.toGetWorkoutSessionResponse(persistedWorkoutSession);
         return workoutSessionMapper.toGetWorkoutSessionFullResponse(persistedWorkoutSession);
     }
+    @Transactional(rollbackFor = Exception.class)
+    public ExerciseSetsResponse updateWorkoutSessionExerciseSets2(
+            String workoutSessionId,
+            String userId,
+            Set<ExerciseSetCreateRequest> updateExerciseSetsRequest
+    //            WorkoutsessionUpdateExerciseSetsRequest updateExerciseSetsRequest
+    ) {
+        // encuentra workoutsession
+        WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
 
+        // mapeo exerciseSets
+        Set<ExerciseSet> exerciseSets = updateExerciseSetsRequest.stream()
+                .map((exerciseSet) -> {
+                    exerciseSet.setWorkoutSessionId(workoutSessionId);
+                    return exerciseSetMapper.toExerciseSet(exerciseSet);
+                })
+                .collect(Collectors.toSet());
+
+        // persiste exerciseSets
+        List<ExerciseSet> persistedExerciseSets = exerciseSetRepository.saveAllAndFlush(exerciseSets);
+
+        // mapeo a exerciseSetResponse
+        Set<ExerciseSetResponse> exerciseSetResponses = persistedExerciseSets.stream()
+                .map(exerciseSetMapper::toGetExerciseSetResponse)
+                .collect(Collectors.toSet());
+
+        // objeto response
+        ExerciseSetsResponse res = new ExerciseSetsResponse(workoutSessionId, exerciseSetResponses);
+        return res;
+
+    }
 }
+
+
+

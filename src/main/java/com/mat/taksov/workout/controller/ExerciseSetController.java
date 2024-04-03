@@ -4,8 +4,10 @@ import com.mat.taksov.authentication.service.UserSessionService;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.ExerciseSetResponse;
+import com.mat.taksov.workout.dto.ExerciseSetsResponse;
 import com.mat.taksov.workout.exception.ExerciseSetNotFoundException;
 import com.mat.taksov.workout.service.ExerciseSetService;
+import com.mat.taksov.workout.service.WorkoutSessionExerciseSetService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +21,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @RequestMapping("/user/{user_id}/workout/{workout_id}/exercise_set")
 @RestController
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExerciseSetController {
     private final ExerciseSetService exerciseSetService;
     private final UserSessionService userSessionService;
+    private final WorkoutSessionExerciseSetService workoutSessionExerciseSetService;
 
     @PostMapping("/create")
     public ResponseEntity<ExerciseSetResponse> createExerciseSet(
@@ -35,6 +40,15 @@ public class ExerciseSetController {
             @AuthenticationPrincipal User user){
         userSessionService.assertLoggedUser(user, userId);
         return ResponseEntity.ok(exerciseSetService.createExerciseSet(exerciseSetRequest, workoutId, userId));
+    }
+    @PostMapping("/createMany")
+    public ResponseEntity<ExerciseSetsResponse> createExerciseSets(
+            @Valid @RequestBody Set<ExerciseSetCreateRequest> exerciseSetRequest,
+            @PathVariable("user_id") String userId,
+            @PathVariable("workout_id") String workoutId,
+            @AuthenticationPrincipal User user){
+        userSessionService.assertLoggedUser(user, userId);
+        return ResponseEntity.ok(workoutSessionExerciseSetService.updateWorkoutSessionExerciseSets2(workoutId, userId, exerciseSetRequest));
     }
 
     @GetMapping("/all")

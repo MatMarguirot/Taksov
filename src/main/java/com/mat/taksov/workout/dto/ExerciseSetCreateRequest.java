@@ -19,6 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExerciseSetCreateRequest {
+    @Nullable
+    private String id;
     @JsonAlias("exercise_id")
     @NotNull
     @Valid

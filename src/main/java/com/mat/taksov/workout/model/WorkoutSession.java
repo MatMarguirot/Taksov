@@ -8,10 +8,13 @@ import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,6 +65,9 @@ public class WorkoutSession implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
     private Set<MuscleGroup> muscleGroups = new HashSet<>();
+
+    @CreationTimestamp
+    private Date created;
 
     public void calculateAndSetDuration(){
         if(startTime != null && endTime != null && startTime.isBefore(endTime)){
