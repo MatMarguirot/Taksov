@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +24,8 @@ public class WorkoutSessionCreateRequest {
     private String name = "Workout";
     @Size(min = 0, max = 100, message = "Descripcion no puede tener mas de 100 caracteres")
     private String description = "";
-    private LocalDateTime startTime = LocalDateTime.now();
-    private LocalDateTime endTime = null;
+    private Instant startTime = Instant.now();
+    private Instant endTime = null;
     private WorkoutStatus status = WorkoutStatus.TO_DO;
     @Nullable
     private Set<ExerciseSet> exerciseSets;

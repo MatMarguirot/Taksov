@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -39,7 +40,7 @@ public class ExerciseSet implements Serializable {
     private WorkoutSession workoutSession;
 
     @CreationTimestamp
-    private Date created;
+    private Instant created;
 
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "muscle_group_id")

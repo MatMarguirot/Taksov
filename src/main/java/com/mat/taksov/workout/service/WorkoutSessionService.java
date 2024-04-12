@@ -23,7 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -151,7 +151,7 @@ public class WorkoutSessionService {
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() != WorkoutStatus.TO_DO)
             throw new WorkoutIllegalStateException("TAREA YA HA SIDO" + (workoutSession.getStatus() == WorkoutStatus.IN_PROGRESS ? " INICIADA" : " FINALIZADA"));
-        LocalDateTime startTime = LocalDateTime.now();
+        Instant startTime = Instant.now();
         if(workoutSession.getEndTime() != null && startTime.isAfter(workoutSession.getEndTime()))
             throw new WorkoutIllegalStateException("LA TAREA NO PUEDE TENER UNA FECHA DE INICIO MAYOR A LA FECHA DE TERMINO");
         workoutSession.setStartTime(startTime);
@@ -164,7 +164,7 @@ public class WorkoutSessionService {
     public WorkoutSessionFullResponse endSession(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() != WorkoutStatus.IN_PROGRESS) throw new WorkoutIllegalStateException("TAREA " + (workoutSession.getStatus() == WorkoutStatus.TO_DO ? "AUN NO HA SIDO INICIADA" : "YA FUE FINALIZADA"));
-        LocalDateTime endTime = LocalDateTime.now();
+        Instant endTime = Instant.now();
         if(endTime != null && endTime.isBefore(workoutSession.getStartTime())) throw new WorkoutIllegalStateException("LA TAREA NO PUEDE TENER UNA FECHA DE TERMINO MENOR A LA FECHA DE INICIO");
         workoutSession.setEndTime(endTime);
 //        workoutSession.calculateAndSetDuration();
@@ -178,7 +178,7 @@ public class WorkoutSessionService {
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() == WorkoutStatus.TO_DO) throw new WorkoutIllegalStateException("TAREA AUN NO HA SIDO INICIADA");
         workoutSession.setEndTime(null);
-        workoutSession.setStartTime(LocalDateTime.now());
+        workoutSession.setStartTime(Instant.now());
 //        workoutSession.setDuration(Duration.ZERO);
         workoutSession.setStatus(WorkoutStatus.TO_DO);
         workoutSessionRepository.save(workoutSession);
@@ -202,7 +202,7 @@ public class WorkoutSessionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionResponse updateWorkoutSessionStartTime(String workoutSessionId, String userId, LocalDateTime startTime){
+    public WorkoutSessionResponse updateWorkoutSessionStartTime(String workoutSessionId, String userId, Instant startTime){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStartTime() != null && workoutSession.getStartTime().equals(startTime)) return workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
         workoutSession.setStartTime(startTime);
@@ -210,7 +210,7 @@ public class WorkoutSessionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionResponse updateWorkoutSessionEndTime(String workoutSessionId, String userId, LocalDateTime endTime){
+    public WorkoutSessionResponse updateWorkoutSessionEndTime(String workoutSessionId, String userId, Instant endTime){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getEndTime() != null && workoutSession.getEndTime().equals(endTime)) return workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
         workoutSession.setEndTime(endTime);

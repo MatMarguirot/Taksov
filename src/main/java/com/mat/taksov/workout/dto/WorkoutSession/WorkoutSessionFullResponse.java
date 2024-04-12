@@ -1,6 +1,5 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
-import com.mat.taksov.user.model.Task;
 import com.mat.taksov.workout.dto.ExerciseSetResponse;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
@@ -9,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
@@ -19,8 +18,8 @@ public class WorkoutSessionFullResponse implements IWorkoutSessionResponse{
     private String id;
     private String name;
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
     private WorkoutStatus status;
     private String userId;
 //    private User user;

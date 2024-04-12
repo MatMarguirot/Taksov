@@ -5,7 +5,7 @@ import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 public interface IWorkoutSessionResponse {
@@ -21,13 +21,13 @@ public interface IWorkoutSessionResponse {
 
     public void setDescription(String description);
 
-    public LocalDateTime getStartTime();
+    public Instant getStartTime();
 
-    public void setStartTime(LocalDateTime startTime);
+    public void setStartTime(Instant startTime);
 
-    public LocalDateTime getEndTime();
+    public Instant getEndTime();
 
-    public void setEndTime(LocalDateTime endTime);
+    public void setEndTime(Instant endTime);
 
     public WorkoutStatus getStatus();
 

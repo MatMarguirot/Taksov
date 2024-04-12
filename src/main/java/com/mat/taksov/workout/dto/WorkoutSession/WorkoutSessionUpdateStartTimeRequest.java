@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkoutSessionUpdateStartTimeRequest {
     @JsonAlias("start_time")
-    private LocalDateTime startTime;
+    private Instant startTime;
 }

@@ -2,22 +2,18 @@ package com.mat.taksov.workout.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.mat.taksov.user.model.Task;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,11 +35,11 @@ public class WorkoutSession implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private Instant startTime;
 
     @Column(nullable = true)
     @Nullable
-    private LocalDateTime endTime = null;
+    private Instant endTime = null;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -67,7 +63,7 @@ public class WorkoutSession implements Serializable {
     private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
     @CreationTimestamp
-    private Date created;
+    private Instant created;
 
     public void calculateAndSetDuration(){
         if(startTime != null && endTime != null && startTime.isBefore(endTime)){
@@ -102,7 +98,7 @@ public class WorkoutSession implements Serializable {
         this.muscleGroups.add(muscleGroup);
     }
 
-    public void setEndTime(LocalDateTime endTime){
+    public void setEndTime(Instant endTime){
         if(this.startTime == null) return;
         this.endTime = endTime;
         if(endTime == null){
@@ -112,7 +108,7 @@ public class WorkoutSession implements Serializable {
         this.calculateAndSetDuration();
     }
 
-    public void setStartTime(LocalDateTime startTime){
+    public void setStartTime(Instant startTime){
         this.startTime = startTime;
         if(endTime == null){
             this.duration = Duration.ZERO;

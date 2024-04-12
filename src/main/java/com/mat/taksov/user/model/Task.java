@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 
 @Data
@@ -25,10 +25,10 @@ public class Task {
     private String description;
 
     @Column(nullable = true)
-    private LocalDateTime startTime;
+    private Instant startTime;
 
     @Column(nullable = true)
-    private LocalDateTime endTime;
+    private Instant endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)

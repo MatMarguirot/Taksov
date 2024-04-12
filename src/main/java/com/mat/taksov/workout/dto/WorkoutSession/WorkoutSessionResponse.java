@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +20,8 @@ public class WorkoutSessionResponse implements IWorkoutSessionResponse {
     private String id;
     private String name;
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
     private WorkoutStatus status;
     private String userId;
     //    private User user;
