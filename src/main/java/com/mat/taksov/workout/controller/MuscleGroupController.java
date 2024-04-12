@@ -31,6 +31,11 @@ public class MuscleGroupController {
         return ResponseEntity.ok(muscleGroupService.findAll());
     }
 
+    @GetMapping
+    public ResponseEntity<List<MuscleGroup>> getMuscleGroupsByWorkoutId(@RequestParam("workoutSessionId") String workoutSessionId) {
+        return ResponseEntity.ok(muscleGroupService.getByWorkoutSessionId(workoutSessionId));
+    }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/bulk")
     public ResponseEntity<Map<String,String>> bulkUploadMuscleGroups(

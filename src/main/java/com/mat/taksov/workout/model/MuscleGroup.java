@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,13 +27,19 @@ public class MuscleGroup implements Serializable {
     @Column(name = "muscle_group_name", unique = true)
     private String name;
 
+    @ManyToMany(mappedBy = "muscleGroups", fetch = FetchType.LAZY)
+    @JsonBackReference
+    @Nullable
+    private Set<WorkoutSession> workoutSessions = new HashSet<>();
+
+    public MuscleGroup(String name){
+        this.name = name;
+    }
+
 //    @OneToMany(mappedBy = "muscleGroup", fetch = FetchType.LAZY)
 //    @JsonBackReference
 //    private Set<Exercise> exercises = new HashSet<>();
 
-//    @ManyToMany(mappedBy = "muscleGroups", fetch = FetchType.LAZY)
-//    @JsonBackReference
-//    private Set<WorkoutSession> workoutSessions = new HashSet<>();
 
 //    @ManyToMany(mappedBy = "muscleGroups", fetch = FetchType.LAZY)
 //    private Set<ProgramDay> programDays;

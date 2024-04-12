@@ -3,6 +3,7 @@ package com.mat.taksov.workout.dto;
 //import com.mat.taksov.workout.model.ExerciseSet;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.mat.taksov.workout.model.Exercise;
+import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.MuscleGroup;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
@@ -29,6 +30,7 @@ public class ExerciseSetCreateRequest {
     private String description = "";
     private long weight;
     private long reps;
+
     @JsonAlias("workout_session_id")
     @Nullable
     private String workoutSessionId = "";

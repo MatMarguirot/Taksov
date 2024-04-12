@@ -42,7 +42,13 @@ public class WorkoutSessionController {
             @Valid @RequestBody WorkoutSessionCreateRequest workoutSessionCreateRequest,
             @AuthenticationPrincipal User user
     ){
-        return ResponseEntity.ok(workoutSessionService.createWorkoutSession(workoutSessionCreateRequest, user.getId()));
+        WorkoutSessionFullResponse createdWorkoutSession;
+        if(workoutSessionCreateRequest.getExerciseSets().isEmpty()){
+            createdWorkoutSession = workoutSessionService.createWorkoutSession(workoutSessionCreateRequest, user.getId());
+        }else{
+            createdWorkoutSession = workoutSessionExerciseSetService.createWorkoutSession(workoutSessionCreateRequest, user.getId());
+        }
+        return ResponseEntity.ok(createdWorkoutSession);
     }
 
     @GetMapping("/all")

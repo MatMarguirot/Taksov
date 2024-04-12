@@ -2,6 +2,7 @@ package com.mat.taksov.workout.service;
 
 import com.mat.taksov.workout.dto.ExerciseBulkDto;
 import com.mat.taksov.workout.dto.ExerciseDto;
+import com.mat.taksov.workout.exception.ExerciseNotFoundException;
 import com.mat.taksov.workout.exception.InvalidBulkExerciseException;
 import com.mat.taksov.workout.model.Exercise;
 import com.mat.taksov.workout.model.MuscleGroup;
@@ -24,7 +25,7 @@ public class ExerciseService {
     private final ModelMapper exerciseMapper;
 
     public Exercise findById(String id) {
-        return exerciseRepository.findById(id).orElseThrow();
+        return exerciseRepository.findById(id).orElseThrow(ExerciseNotFoundException::new);
     }
 
     public Exercise save(Exercise exercise) {

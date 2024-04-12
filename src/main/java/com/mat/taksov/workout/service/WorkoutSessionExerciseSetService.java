@@ -4,8 +4,8 @@ import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.ExerciseSetResponse;
 import com.mat.taksov.workout.dto.ExerciseSetsResponse;
+import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
-import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.dto.mapper.ExerciseSetMapper;
 import com.mat.taksov.workout.dto.mapper.WorkoutSessionMapper;
 import com.mat.taksov.workout.exception.ExerciseNotFoundException;
@@ -14,20 +14,16 @@ import com.mat.taksov.workout.exception.WorkoutNotFoundException;
 import com.mat.taksov.workout.model.Exercise;
 import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.WorkoutSession;
-import com.mat.taksov.workout.model.WorkoutsessionUpdateExerciseSetsRequest;
 import com.mat.taksov.workout.repository.ExerciseRepository;
 import com.mat.taksov.workout.repository.ExerciseSetRepository;
+import com.mat.taksov.workout.repository.MuscleGroupRepository;
 import com.mat.taksov.workout.repository.WorkoutSessionRepository;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,11 +32,69 @@ import java.util.stream.Collectors;
 @Slf4j
 @AllArgsConstructor
 public class WorkoutSessionExerciseSetService {
-    private final WorkoutSessionRepository workoutSessionRepository;
+    private final WorkoutSessionService workoutSessionService;
+    private final WorkoutSessionRepository workoutSessionRepository; // replace for workoutSessionService
     private final ExerciseSetRepository exerciseSetRepository;
     private final ExerciseRepository exerciseRepository;
     private final ExerciseSetMapper exerciseSetMapper;
     private final WorkoutSessionMapper workoutSessionMapper;
+    private final MuscleGroupRepository muscleGroupRepository;
+
+    @Transactional(rollbackFor = Exception.class)
+    public WorkoutSessionFullResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
+        Set<ExerciseSet> exerciseSets;
+
+        // referencia de usuario
+        User user = new User();
+        user.setId(userId);
+
+        WorkoutSession workoutSession = workoutSessionMapper.toWorkoutSession(workoutSessionCreateRequest, user);
+
+
+        // asigna referencia a workoutSession a nested exerciseSets
+        if(workoutSessionCreateRequest.getExerciseSets() != null && !workoutSessionCreateRequest.getExerciseSets().isEmpty()){
+            exerciseSets = workoutSession.getExerciseSets().stream().map((exerciseSet) -> {
+                exerciseSet.setWorkoutSession(workoutSession);
+                return exerciseSet;
+            }).collect(Collectors.toSet());
+            workoutSession.setExerciseSets(exerciseSets);
+        }
+
+        // crea workoutSession
+        WorkoutSession createdWorkoutSession = workoutSessionRepository.save(workoutSession);
+        return workoutSessionMapper.toGetWorkoutSessionFullResponse(createdWorkoutSession);
+//        WorkoutSessionFullResponse createdWorkoutSession = workoutSessionService.createWorkoutSession(workoutSessionCreateRequest, userId);
+//        if()
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public ExerciseSetResponse addExerciseSet(
+            ExerciseSetCreateRequest exerciseSetCreateRequest,
+            String userId,
+            String workoutSessionId
+    ){
+        // obtiene workoutSession
+        WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutSessionId, userId).orElseThrow(WorkoutNotFoundException::new);
+
+        // asocia exerciseSet a workoutSession si no trae su id
+        if(exerciseSetCreateRequest.getWorkoutSessionId() == null || exerciseSetCreateRequest.getWorkoutSessionId().isBlank()){
+            exerciseSetCreateRequest.setWorkoutSessionId(workoutSessionId);
+        }
+
+        // obtiene exercise
+        Exercise exercise = exerciseRepository.findById(exerciseSetCreateRequest.getExerciseId()).orElseThrow(ExerciseNotFoundException::new);
+
+        // guarda ExerciseSet
+        ExerciseSet persistedExerciseSet = exerciseSetRepository.saveAndFlush(exerciseSetMapper.toExerciseSet(exerciseSetCreateRequest, exercise));
+
+        // ve si el MuscleGoup de ExerciseSet se encuentra en Workout.muscleGroups para actualizar
+        if(!workoutSession.getMuscleGroups().contains(persistedExerciseSet.getExercise().getMuscleGroup())){
+//            muscleGroupRepository.save(persistedExerciseSet.getExercise().getMuscleGroup());
+            updateAndPersistWorkoutSessionMuscleGroup(workoutSessionId);
+
+        }
+        return exerciseSetMapper.toGetExerciseSetResponse(persistedExerciseSet);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public WorkoutSessionFullResponse updateWorkoutSessionExerciseSets(
@@ -101,6 +155,34 @@ public class WorkoutSessionExerciseSetService {
         ExerciseSetsResponse res = new ExerciseSetsResponse(workoutSessionId, exerciseSetResponses);
         return res;
 
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteExerciseSetFromWorkout(
+            String workoutSessionId,
+            String userId,
+            String exerciseSetId
+
+    ) {
+        exerciseSetRepository.findByIdAndUserId(exerciseSetId, userId).orElseThrow(ExerciseSetNotFoundException::new);
+        exerciseSetRepository.deleteById(exerciseSetId);
+        exerciseSetRepository.flush();
+        // obtiene workoutsession con exerciseSets
+        WorkoutSession workoutSession = workoutSessionRepository.findByIdWithSets(workoutSessionId);
+        workoutSession.updateMuscleGroups();
+        workoutSessionRepository.save(workoutSession);
+    }
+
+
+    // actualiza los musclegroups de workoutsession
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAndPersistWorkoutSessionMuscleGroup(
+            String workoutSessionId
+    ) {
+        // obtiene workoutsession con exerciseSets
+        WorkoutSession workoutSession = workoutSessionRepository.findByIdWithSets(workoutSessionId);
+        workoutSession.updateMuscleGroups();
+        workoutSessionRepository.save(workoutSession);
     }
 }
 

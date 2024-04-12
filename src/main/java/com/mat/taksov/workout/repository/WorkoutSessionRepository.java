@@ -18,6 +18,11 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
     @Query("select w from WorkoutSession w where w.id = :workout_id and w.user.id = :user_id")
     Optional<WorkoutSession> findByIdAndUserId(@Param("workout_id") String workoutId, @Param("user_id") String userId);
     @Query(
+            value = "SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.id = :workout_id",
+            countQuery = "SELECT COUNT(w) FROM WorkoutSession w WHERE w.id = :workout_id"
+    )
+    WorkoutSession findByIdWithSets(@Param("workout_id") String workoutSessionId);
+    @Query(
             value = "SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.user.id = :user_id",
             countQuery = "SELECT COUNT(w) FROM WorkoutSession w WHERE w.user.id = :user_id"
     )
@@ -29,6 +34,8 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
     @Query("SELECT w FROM WorkoutSession w WHERE w.user.id = :user_id ORDER BY w.startTime DESC limit 1")
     Optional<WorkoutSession> findLatestWorkoutByUserId(@Param("user_id") String id);
 
+    @Query("SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.exerciseSets WHERE w.user.id = :user_id AND w.status != 'FINISHED' ORDER BY w.startTime DESC limit 1")
+    Optional<WorkoutSession> findLatestPendingWorkoutByUserIdWithSets(@Param("user_id") String id);
 
     Optional<WorkoutSession> findLatestPendingByUserId(@Param("user_id") String id);
 

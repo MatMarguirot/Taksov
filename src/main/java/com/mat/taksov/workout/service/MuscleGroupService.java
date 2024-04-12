@@ -12,10 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -81,7 +78,7 @@ public class MuscleGroupService {
                 })
                 .map((dto) -> {
             insertionResults.put(dto.getMuscleGroupName().toLowerCase(), "succeeded");
-            return new MuscleGroup(null, dto.getMuscleGroupName().toLowerCase());
+            return new MuscleGroup(dto.getMuscleGroupName().toLowerCase());
         }).toList();
 //        muscleGroupRepository.deleteAll();
         if(muscleGroups.isEmpty()) throw new InvalidBulkMuscleGroupException(insertionResults);
@@ -92,6 +89,12 @@ public class MuscleGroupService {
     @Transactional(readOnly = true)
     public boolean existsByName(String muscleGroupName){
         return muscleGroupRepository.existsByName(muscleGroupName);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MuscleGroup> getByWorkoutSessionId(String workoutSessionId){
+        List<MuscleGroup> mgs = muscleGroupRepository.findByWorkoutSessionsId(workoutSessionId);
+        return mgs;
     }
 
 //    public MuscleGroup saveMuscleGroupModel(MuscleGroup muscleGroup) {

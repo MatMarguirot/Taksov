@@ -5,6 +5,7 @@ import com.mat.taksov.workout.dto.MuscleGroupDto;
 import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class WorkoutSessionCreateRequest {
     private LocalDateTime startTime = LocalDateTime.now();
     private LocalDateTime endTime = null;
     private WorkoutStatus status = WorkoutStatus.TO_DO;
+    @Nullable
+    private Set<ExerciseSet> exerciseSets;
     private String user_id;
     private Duration duration = Duration.ZERO;
     private Set<MuscleGroupDto> muscleGroups = new HashSet<>();

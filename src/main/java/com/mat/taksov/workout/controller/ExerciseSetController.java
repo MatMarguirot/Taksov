@@ -1,15 +1,13 @@
 package com.mat.taksov.workout.controller;
 
 import com.mat.taksov.authentication.service.UserSessionService;
+import com.mat.taksov.common.dto.MessageResponseDto;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.ExerciseSetResponse;
 import com.mat.taksov.workout.dto.ExerciseSetsResponse;
-import com.mat.taksov.workout.exception.ExerciseSetNotFoundException;
 import com.mat.taksov.workout.service.ExerciseSetService;
 import com.mat.taksov.workout.service.WorkoutSessionExerciseSetService;
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -40,6 +37,20 @@ public class ExerciseSetController {
             @AuthenticationPrincipal User user){
         userSessionService.assertLoggedUser(user, userId);
         return ResponseEntity.ok(exerciseSetService.createExerciseSet(exerciseSetRequest, workoutId, userId));
+    }
+
+    // crea nuevo ExerciseSet para WorkoutSession y actualiza WorkoutSession.muscleGroups
+    @PostMapping("/add")
+    public ResponseEntity<ExerciseSetResponse> addExerciseSet(
+            @Valid @RequestBody ExerciseSetCreateRequest exerciseSetRequest,
+            @PathVariable("user_id") String userId,
+            @PathVariable("workout_id") String workoutId,
+            @AuthenticationPrincipal User user){
+        userSessionService.assertLoggedUser(user, userId);
+        var res = workoutSessionExerciseSetService.addExerciseSet(exerciseSetRequest, userId, workoutId);
+
+        // metodo persiste WorkoutSession completo
+        return ResponseEntity.ok(res);
     }
     @PostMapping("/createMany")
     public ResponseEntity<ExerciseSetsResponse> createExerciseSets(
@@ -74,14 +85,25 @@ public class ExerciseSetController {
     }
 
     @DeleteMapping("/{exercise_set_id}/delete")
-    public ResponseEntity<String> deleteExerciseSet(
+    public ResponseEntity<MessageResponseDto> deleteExerciseSet(
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
             @PathVariable("exercise_set_id") String exerciseSetId
     ){
         userSessionService.assertLoggedUser(user, userId);
-        exerciseSetService.deleteExerciseSet(exerciseSetId, userId);
-        return ResponseEntity.ok("ExerciseSet borrado.");
+        workoutSessionExerciseSetService.deleteExerciseSetFromWorkout(workoutId, userId, exerciseSetId);
+        return ResponseEntity.ok(new MessageResponseDto("Ejercicio borrado con éxito"));
     }
+//    @DeleteMapping("/{exercise_set_id}/delete")
+//    public ResponseEntity<String> deleteExerciseSet(
+//            @AuthenticationPrincipal User user,
+//            @PathVariable("user_id") String userId,
+//            @PathVariable("workout_id") String workoutId,
+//            @PathVariable("exercise_set_id") String exerciseSetId
+//    ){
+//        userSessionService.assertLoggedUser(user, userId);
+//        exerciseSetService.deleteExerciseSet(exerciseSetId, userId);
+//        return ResponseEntity.ok("ExerciseSet borrado.");
+//    }
 }

@@ -4,6 +4,7 @@ import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
+import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.WorkoutSession;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,17 @@ public class WorkoutSessionMapper {
     private final ModelMapper modelMapper;
 
     public WorkoutSession toWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, User user) {
+        // si tiene sets, deben estar asociados correctamente por WorkoutSessionId
         WorkoutSession workoutSession = modelMapper.map(workoutSessionCreateRequest, WorkoutSession.class);
+        workoutSession.setUser(user);
+        return workoutSession;
+    }
+
+    public WorkoutSession toWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId) {
+        // si tiene sets, deben estar asociados correctamente por WorkoutSessionId
+        WorkoutSession workoutSession = modelMapper.map(workoutSessionCreateRequest, WorkoutSession.class);
+        User user = new User();
+        user.setId(userId);
         workoutSession.setUser(user);
         return workoutSession;
     }

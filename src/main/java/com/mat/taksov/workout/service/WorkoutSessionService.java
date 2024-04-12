@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @Slf4j
@@ -31,13 +33,30 @@ import java.time.LocalDateTime;
 public class WorkoutSessionService {
     private final WorkoutSessionRepository workoutSessionRepository;
     private final WorkoutSessionMapper workoutSessionMapper;
+//    private final WorkoutSessionExerciseSetService workoutSessionExerciseSetService;
 
+
+    // para que funcione, los exerciseSets dentro de workoutSession deben tener id null
     @Transactional(rollbackFor = Exception.class)
     public WorkoutSessionFullResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
         User user = new User();
         user.setId(userId);
-        WorkoutSession createdWorkoutSession = workoutSessionRepository.save(workoutSessionMapper.toWorkoutSession(workoutSessionCreateRequest, user));
-        createdWorkoutSession.getExerciseSets();
+        WorkoutSession createdWorkoutSession = null;
+
+        // si existe, guardar exerciseSets en variable
+//        if(workoutSessionCreateRequest.getExerciseSets() != null && !workoutSessionCreateRequest.getExerciseSets().isEmpty()){
+//            // guardar exerciseSets en variable y vaciar workoutSession
+////            exerciseSets = workoutSessionCreateRequest.getExerciseSets();
+//            workoutSessionCreateRequest.setExerciseSets(new HashSet<>());
+//        }
+
+        // agregar parent workoutSession to every child
+
+//        mapped.getExerciseSets().stream((exerciseSet) -> exerciseSet.setWorkoutSession(workoutSession));
+
+        // crear workoutSession
+        createdWorkoutSession = workoutSessionRepository.saveAndFlush(workoutSessionMapper.toWorkoutSession(workoutSessionCreateRequest, user));
+
         return workoutSessionMapper.toGetWorkoutSessionFullResponse(createdWorkoutSession);
     }
 
@@ -66,7 +85,9 @@ public class WorkoutSessionService {
     public WorkoutSessionResponse getLatestPendingWorkoutSession(String userId, boolean withSets){
         WorkoutSession workoutSession;
         if (withSets) {
-            workoutSession = workoutSessionRepository.findLatestWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
+//            workoutSession = workoutSessionRepository.findLatestWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
+            // no trae el que necesito
+            workoutSession = workoutSessionRepository.findLatestPendingWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
         }else workoutSession = workoutSessionRepository.findLatestWorkoutByUserId(userId).orElseThrow(WorkoutNotFoundException::new);
         return this.workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
     }
