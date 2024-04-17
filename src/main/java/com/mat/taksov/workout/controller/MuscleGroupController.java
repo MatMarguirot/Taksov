@@ -46,7 +46,4 @@ public class MuscleGroupController {
         return ResponseEntity.ok(muscleGroupService.createBulkMuscleGroup(muscleGroupBulkDtos));
 
     }
-
-
-
 }

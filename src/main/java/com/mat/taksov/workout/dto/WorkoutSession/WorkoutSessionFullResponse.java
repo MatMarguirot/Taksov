@@ -26,7 +26,7 @@ public class WorkoutSessionFullResponse { // implements IWorkoutSessionResponse{
 //    private User user;
     private Duration duration;
     private Set<ExerciseSetResponse> exerciseSets;
-    private Set<MuscleGroupDto> muscleGroups;
+//    private Set<MuscleGroupDto> muscleGroups;
 }
 
 

@@ -24,20 +24,8 @@ public class MuscleGroup implements Serializable {
     @Column(name = "muscle_group_name", unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "muscleGroups", fetch = FetchType.LAZY)
-    @JsonBackReference
-    @Nullable
-    private Set<WorkoutSession> workoutSessions = new HashSet<>();
-
     public MuscleGroup(String name){
         this.name = name;
     }
 
-//    @OneToMany(mappedBy = "muscleGroup", fetch = FetchType.LAZY)
-//    @JsonBackReference
-//    private Set<Exercise> exercises = new HashSet<>();
-
-
-//    @ManyToMany(mappedBy = "muscleGroups", fetch = FetchType.LAZY)
-//    private Set<ProgramDay> programDays;
 }

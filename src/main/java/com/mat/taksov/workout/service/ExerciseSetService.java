@@ -90,6 +90,7 @@ public class ExerciseSetService {
     public void deleteExerciseSet(String exerciseSetId, String userId){
         ExerciseSet exerciseSet = exerciseSetRepository.findByIdAndUserId(exerciseSetId, userId).orElseThrow(ExerciseSetNotFoundException::new);
         log.info("Borrando exercise set: \nID:"+exerciseSet.getId()+"\n Ejercicio: "+exerciseSet.getExercise().getName()+"\n MuscleGroup: "+exerciseSet.getExercise().getMuscleGroup().getName());
-        workoutSessionService.removeExerciseSetsFromWorkoutSession(exerciseSet.getWorkoutSession().getId(), exerciseSet);
+        // hacer esto en repository
+//        workoutSessionService.removeExerciseSetsFromWorkoutSession(exerciseSet.getWorkoutSession().getId(), exerciseSet);
     }
 }

@@ -88,11 +88,11 @@ public class WorkoutSessionExerciseSetService {
         ExerciseSet persistedExerciseSet = exerciseSetRepository.saveAndFlush(exerciseSetMapper.toExerciseSet(exerciseSetCreateRequest, exercise));
 
         // ve si el MuscleGoup de ExerciseSet se encuentra en Workout.muscleGroups para actualizar
-        if(!workoutSession.getMuscleGroups().contains(persistedExerciseSet.getExercise().getMuscleGroup())){
-//            muscleGroupRepository.save(persistedExerciseSet.getExercise().getMuscleGroup());
-            updateAndPersistWorkoutSessionMuscleGroup(workoutSessionId);
-
-        }
+//        if(!workoutSession.getMuscleGroups().contains(persistedExerciseSet.getExercise().getMuscleGroup())){
+////            muscleGroupRepository.save(persistedExerciseSet.getExercise().getMuscleGroup());
+//            updateAndPersistWorkoutSessionMuscleGroup(workoutSessionId);
+//
+//        }
         return exerciseSetMapper.toGetExerciseSetResponse(persistedExerciseSet);
     }
 
@@ -169,7 +169,6 @@ public class WorkoutSessionExerciseSetService {
         exerciseSetRepository.flush();
         // obtiene workoutsession con exerciseSets
         WorkoutSession workoutSession = workoutSessionRepository.findByIdWithSets(workoutSessionId);
-        workoutSession.updateMuscleGroups();
         workoutSessionRepository.save(workoutSession);
     }
 
@@ -181,7 +180,6 @@ public class WorkoutSessionExerciseSetService {
     ) {
         // obtiene workoutsession con exerciseSets
         WorkoutSession workoutSession = workoutSessionRepository.findByIdWithSets(workoutSessionId);
-        workoutSession.updateMuscleGroups();
         workoutSessionRepository.save(workoutSession);
     }
 }

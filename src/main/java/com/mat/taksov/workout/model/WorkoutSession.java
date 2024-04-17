@@ -58,13 +58,13 @@ public class WorkoutSession implements Serializable {
     @CreationTimestamp
     private Instant created;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "workout_session_muscle_group",
-            joinColumns = @JoinColumn(name = "workout_session_id"),
-            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
-    )
-    private Set<MuscleGroup> muscleGroups = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "workout_session_muscle_group",
+//            joinColumns = @JoinColumn(name = "workout_session_id"),
+//            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
+//    )
+//    private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
 
 
@@ -84,7 +84,7 @@ public class WorkoutSession implements Serializable {
                 this.exerciseSets.clear();
                 this.exerciseSets.addAll(exerciseSets);
             }
-            updateMuscleGroups();
+//            updateMuscleGroups();
 
         }catch (Exception e) {
             throw e;
@@ -93,13 +93,13 @@ public class WorkoutSession implements Serializable {
 
     public void addExerciseSet(ExerciseSet exerciseSet){
         exerciseSets.add(exerciseSet);
-        updateMuscleGroups();
+//        updateMuscleGroups();
     }
 
-    public void addMuscleGroup(MuscleGroup muscleGroup){
-        if(this.muscleGroups.contains(muscleGroup)) return;
-        this.muscleGroups.add(muscleGroup);
-    }
+//    public void addMuscleGroup(MuscleGroup muscleGroup){
+//        if(this.muscleGroups.contains(muscleGroup)) return;
+//        this.muscleGroups.add(muscleGroup);
+//    }
 
     public void setEndTime(Instant endTime){
         if(this.startTime == null) return;
@@ -120,29 +120,29 @@ public class WorkoutSession implements Serializable {
         if(this.endTime.isBefore(startTime)) this.calculateAndSetDuration();
     }
 
-    public void updateMuscleGroups(){
-        this.muscleGroups.clear();
-
-        if(this.exerciseSets.isEmpty()){
-            return;
-        }
-
-//        this.muscleGroups = this.exerciseSets.stream()
-//                .map(exerciseSet -> {
-//                    MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
-//                    if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
-//                    return muscleGroup;
-//                })
-//                .distinct()
-//                .collect(Collectors.toSet());
-
-        //alt
-        for(ExerciseSet exerciseSet : this.exerciseSets){
-            MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
-            if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
-            this.muscleGroups.add(muscleGroup);
-        }
-
-    }
+//    public void updateMuscleGroups(){
+//        this.muscleGroups.clear();
+//
+//        if(this.exerciseSets.isEmpty()){
+//            return;
+//        }
+//
+////        this.muscleGroups = this.exerciseSets.stream()
+////                .map(exerciseSet -> {
+////                    MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
+////                    if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
+////                    return muscleGroup;
+////                })
+////                .distinct()
+////                .collect(Collectors.toSet());
+//
+//        //alt
+//        for(ExerciseSet exerciseSet : this.exerciseSets){
+//            MuscleGroup muscleGroup = exerciseSet.getExercise().getMuscleGroup();
+//            if(muscleGroup == null) throw new IllegalArgumentException("MUSCLE GROUP NO PUEDE ESTAR VACIO");
+//            this.muscleGroups.add(muscleGroup);
+//        }
+//
+//    }
 
 }

@@ -1,4 +1,4 @@
-package com.mat.taksov.workout.model;
+package com.mat.taksov.workout.dto.WorkoutSession;
 
 
 import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

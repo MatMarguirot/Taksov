@@ -46,7 +46,7 @@ public interface IWorkoutSessionResponse {
 
 //    public void setExerciseSets(Set<ExerciseSetResponse> exerciseSets);
 
-    public Set<MuscleGroup> getMuscleGroups();
+//    public Set<MuscleGroup> getMuscleGroups();
 
     public void setMuscleGroups(Set<MuscleGroupDto> muscleGroups);
 }

@@ -31,5 +31,5 @@ public class WorkoutSessionCreateRequest {
     private Set<ExerciseSet> exerciseSets;
     private String user_id;
     private Duration duration = Duration.ZERO;
-    private Set<MuscleGroupDto> muscleGroups = new HashSet<>();
+//    private Set<MuscleGroupDto> muscleGroups = new HashSet<>();
 }
