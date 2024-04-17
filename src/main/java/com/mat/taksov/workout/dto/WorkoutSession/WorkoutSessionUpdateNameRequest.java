@@ -1,16 +1,9 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
-import com.mat.taksov.user.model.Task;
-import com.mat.taksov.workout.dto.MuscleGroupDto;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

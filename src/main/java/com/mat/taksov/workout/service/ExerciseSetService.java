@@ -1,7 +1,7 @@
 package com.mat.taksov.workout.service;
 
-import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
-import com.mat.taksov.workout.dto.ExerciseSetResponse;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetResponse;
 import com.mat.taksov.workout.dto.mapper.ExerciseSetMapper;
 import com.mat.taksov.workout.exception.ExerciseSetNotFoundException;
 import com.mat.taksov.workout.model.Exercise;

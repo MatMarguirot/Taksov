@@ -3,7 +3,7 @@ package com.mat.taksov.workout.controller;
 import com.mat.taksov.authentication.service.UserSessionService;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
-import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
+import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.service.WorkoutSessionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +28,7 @@ public class AdminWorkoutSessionController {
     private final String workoutUrlString = "admin/workout";
 
     @PostMapping(urlString+"/create")
-    public ResponseEntity<WorkoutSessionFullResponse> createWorkoutSessionForUser (
+    public ResponseEntity<WorkoutSessionWithSetsResponse> createWorkoutSessionForUser (
             @Valid @RequestBody WorkoutSessionCreateRequest workoutSessionCreateRequest,
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId){
@@ -50,11 +50,11 @@ public class AdminWorkoutSessionController {
             @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets,
             Pageable pageable
     ){
-        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(userId, pageable, withSets));
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(userId, pageable));
     }
 
     @GetMapping(urlString+"/{workout_id}")
-    public ResponseEntity<WorkoutSessionFullResponse> getWorkoutSessionByIdAndUser(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> getWorkoutSessionByIdAndUser(
             @AuthenticationPrincipal User user,
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId
@@ -64,7 +64,7 @@ public class AdminWorkoutSessionController {
     }
 
     @GetMapping(workoutUrlString+"/{workout_id}")
-    public ResponseEntity<WorkoutSessionFullResponse> getWorkoutSessionById(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> getWorkoutSessionById(
             @AuthenticationPrincipal User user,
             @PathVariable("workout_id") String workoutId
     ){
@@ -90,7 +90,7 @@ public class AdminWorkoutSessionController {
     }
 
     @PostMapping(urlString+"/{workout_id}/start")
-    public ResponseEntity<WorkoutSessionFullResponse> startSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> startSession(
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user
@@ -100,7 +100,7 @@ public class AdminWorkoutSessionController {
     }
 
     @PostMapping(urlString+"/{workout_id}/end")
-    public ResponseEntity<WorkoutSessionFullResponse> endSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> endSession(
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user
@@ -110,7 +110,7 @@ public class AdminWorkoutSessionController {
     }
 
     @PostMapping(urlString+"/{workout_id}/reset")
-    public ResponseEntity<WorkoutSessionFullResponse> resetSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> resetSession(
             @PathVariable("user_id") String userId,
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user

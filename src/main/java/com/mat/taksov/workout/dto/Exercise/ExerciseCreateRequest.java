@@ -1,7 +1,7 @@
-package com.mat.taksov.workout.dto;
+package com.mat.taksov.workout.dto.Exercise;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import jakarta.annotation.Nullable;
+import com.mat.taksov.workout.dto.MuscleGroup.MuscleGroupDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

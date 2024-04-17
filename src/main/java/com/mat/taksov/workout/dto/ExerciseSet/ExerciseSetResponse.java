@@ -1,16 +1,13 @@
-package com.mat.taksov.workout.dto;
+package com.mat.taksov.workout.dto.ExerciseSet;
 
 //import com.mat.taksov.workout.model.ExerciseSet;
-import com.mat.taksov.workout.model.Exercise;
-import com.mat.taksov.workout.model.MuscleGroup;
+import com.mat.taksov.workout.dto.Exercise.ExerciseDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

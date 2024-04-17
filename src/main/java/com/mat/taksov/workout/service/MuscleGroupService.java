@@ -1,8 +1,6 @@
 package com.mat.taksov.workout.service;
 
-import com.mat.taksov.workout.dto.ExerciseDto;
-import com.mat.taksov.workout.dto.MuscleGroupBulkDto;
-import com.mat.taksov.workout.dto.MuscleGroupDto;
+import com.mat.taksov.workout.dto.MuscleGroup.MuscleGroupBulkDto;
 import com.mat.taksov.workout.exception.ExerciseNotFoundException;
 import com.mat.taksov.workout.exception.InvalidBulkMuscleGroupException;
 import com.mat.taksov.workout.exception.MuscleGroupNotFoundException;

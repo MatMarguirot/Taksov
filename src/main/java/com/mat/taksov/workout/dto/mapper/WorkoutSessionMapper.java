@@ -2,9 +2,8 @@ package com.mat.taksov.workout.dto.mapper;
 
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
-import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
+import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
-import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.WorkoutSession;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,8 +30,8 @@ public class WorkoutSessionMapper {
         return workoutSession;
     }
 
-    public WorkoutSessionFullResponse toGetWorkoutSessionFullResponse(WorkoutSession workoutSession){
-        WorkoutSessionFullResponse res = modelMapper.map(workoutSession, WorkoutSessionFullResponse.class);
+    public WorkoutSessionWithSetsResponse toGetWorkoutSessionFullResponse(WorkoutSession workoutSession){
+        WorkoutSessionWithSetsResponse res = modelMapper.map(workoutSession, WorkoutSessionWithSetsResponse.class);
         res.setUserId(workoutSession.getUser().getId());
         return res;
     }

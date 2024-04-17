@@ -1,4 +1,4 @@
-package com.mat.taksov.workout.dto;
+package com.mat.taksov.workout.dto.MuscleGroup;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MuscleGroupUpdateDto {
+public class MuscleGroupDto {
     @Nullable
     private String id;
-    @Nullable
+    @NotBlank
     private String name;
 }

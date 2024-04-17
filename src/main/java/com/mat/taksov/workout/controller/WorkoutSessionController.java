@@ -2,7 +2,6 @@ package com.mat.taksov.workout.controller;
 
 import com.mat.taksov.authentication.service.UserSessionService;
 import com.mat.taksov.user.model.User;
-import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.*;
 import com.mat.taksov.workout.service.WorkoutSessionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RequestMapping("/workout")
 @RestController
@@ -28,29 +25,34 @@ public class WorkoutSessionController {
     private final UserSessionService userSessionService;
 
     @PostMapping("/create")
-    public ResponseEntity<WorkoutSessionFullResponse> createOwnWorkoutSession (
+    public ResponseEntity<WorkoutSessionWithSetsResponse> createOwnWorkoutSession (
             @Valid @RequestBody WorkoutSessionCreateRequest workoutSessionCreateRequest,
             @AuthenticationPrincipal User user
     ){
-        WorkoutSessionFullResponse createdWorkoutSession = workoutSessionService.createWorkoutSession(workoutSessionCreateRequest, user.getId());
+        WorkoutSessionWithSetsResponse createdWorkoutSession = workoutSessionService.createWorkoutSession(workoutSessionCreateRequest, user.getId());
         return ResponseEntity.ok(createdWorkoutSession);
     }
 
     @GetMapping("/all")
     public ResponseEntity<Page<WorkoutSessionResponse>> getOwnWorkoutSessions(
             @AuthenticationPrincipal User user,
-            @PageableDefault(page = 0, size = 5, sort = {"startTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets
+            @PageableDefault(page = 0, size = 5, sort = {"startTime"}, direction = Sort.Direction.DESC) Pageable pageable
     ){
-        if(withSets){
-            // cuando se busca con sets, solo obtiene un resultado
-            pageable = PageRequest.of(pageable.getPageNumber(), 1, pageable.getSort());
-        }
-        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable, withSets));
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable));
+    }
+
+    // cambiar luego para que traiga tambien los muscle groups
+    // para ello llamar a MuscleGroupService
+    @GetMapping("/all/full")
+    public ResponseEntity<Page<WorkoutSessionWithSetsResponse>> getOwnWorkoutSessionsWithSets(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(page = 0, size = 5, sort = {"startTime"}, direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUserWithSets(user.getId(), pageable));
     }
 
     @GetMapping("/{workout_id}")
-    public ResponseEntity<WorkoutSessionFullResponse> getWorkoutSessionById(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> getWorkoutSessionById(
             @AuthenticationPrincipal User user,
             @PathVariable("workout_id") String workoutId
     ){
@@ -83,7 +85,7 @@ public class WorkoutSessionController {
     }
 
     @PostMapping("/{workout_id}/start")
-    public ResponseEntity<WorkoutSessionFullResponse> startSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> startSession(
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user
     ){
@@ -91,7 +93,7 @@ public class WorkoutSessionController {
     }
 
     @PostMapping("/{workout_id}/end")
-    public ResponseEntity<WorkoutSessionFullResponse> endSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> endSession(
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user
     ){
@@ -99,7 +101,7 @@ public class WorkoutSessionController {
     }
 
     @PostMapping("/{workout_id}/reset")
-    public ResponseEntity<WorkoutSessionFullResponse> resetSession(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> resetSession(
             @PathVariable("workout_id") String workoutId,
             @AuthenticationPrincipal User user
     ){

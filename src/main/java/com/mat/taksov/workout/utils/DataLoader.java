@@ -1,7 +1,7 @@
 //package com.mat.taksov.workout.utils;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.mat.taksov.workout.dto.MuscleGroupBulkDto;
+//import com.mat.taksov.workout.dto.MuscleGroup.MuscleGroupBulkDto;
 //import com.mat.taksov.workout.service.ExerciseService;
 //import com.mat.taksov.workout.service.MuscleGroupService;
 //import org.springframework.beans.factory.annotation.Autowired;

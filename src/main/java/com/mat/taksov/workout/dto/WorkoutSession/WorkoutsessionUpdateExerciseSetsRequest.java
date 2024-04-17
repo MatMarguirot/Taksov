@@ -1,7 +1,7 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
 
-import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

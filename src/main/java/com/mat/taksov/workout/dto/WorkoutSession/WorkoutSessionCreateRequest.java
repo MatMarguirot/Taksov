@@ -1,9 +1,6 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
-import com.mat.taksov.user.model.Task;
-import com.mat.taksov.workout.dto.MuscleGroupDto;
 import com.mat.taksov.workout.model.ExerciseSet;
-import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Size;
@@ -13,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

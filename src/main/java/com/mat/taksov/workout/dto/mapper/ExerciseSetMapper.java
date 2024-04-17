@@ -1,17 +1,12 @@
 package com.mat.taksov.workout.dto.mapper;
 
-import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
-import com.mat.taksov.workout.dto.ExerciseSetResponse;
-import com.mat.taksov.workout.exception.ExerciseNotFoundException;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetResponse;
 import com.mat.taksov.workout.model.Exercise;
 import com.mat.taksov.workout.model.ExerciseSet;
-import com.mat.taksov.workout.repository.ExerciseRepository;
-import com.mat.taksov.workout.repository.MuscleGroupRepository;
-import com.mat.taksov.workout.service.ExerciseService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service

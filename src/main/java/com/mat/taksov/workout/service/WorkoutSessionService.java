@@ -2,7 +2,7 @@ package com.mat.taksov.workout.service;
 
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
-import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
+import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.dto.mapper.WorkoutSessionMapper;
 import com.mat.taksov.workout.exception.NoWorkoutsForUserException;
@@ -31,7 +31,7 @@ public class WorkoutSessionService {
 
     // para que funcione, los exerciseSets dentro de workoutSession deben tener id null
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
+    public WorkoutSessionWithSetsResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
         User user = new User();
         user.setId(userId);
         WorkoutSession createdWorkoutSession = null;
@@ -49,20 +49,21 @@ public class WorkoutSessionService {
     }
 
     @Transactional(readOnly = true)
-    public WorkoutSessionFullResponse getWorkoutSessionById(String workoutId){
+    public WorkoutSessionWithSetsResponse getWorkoutSessionById(String workoutId){
         WorkoutSession workoutSession = workoutSessionRepository.findById(workoutId).orElseThrow(WorkoutNotFoundException::new);
-        WorkoutSessionFullResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
+        WorkoutSessionWithSetsResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
         return workoutSessionRes;
     }
 
-    public Page<WorkoutSessionResponse> getWorkoutSessionsByUser(String userId, Pageable pageable, boolean withSets){
-        Page<WorkoutSession> workoutSessions;
-        if(withSets){
-            workoutSessions = workoutSessionRepository.findByUserIdWithSets(userId, pageable);
-            log.info("test");
-//        }else workoutSessions = workoutSessionRepository.findByUserIdWithMuscleGroups(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
-        }else workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
+    public Page<WorkoutSessionResponse> getWorkoutSessionsByUser(String userId, Pageable pageable){
+        Page<WorkoutSession> workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
         Page<WorkoutSessionResponse> workoutSessionsRes = workoutSessions.map(workoutSessionMapper::toGetWorkoutSessionResponse);
+        return workoutSessionsRes;
+    }
+
+    public Page<WorkoutSessionWithSetsResponse> getWorkoutSessionsByUserWithSets(String userId, Pageable pageable){
+        Page<WorkoutSession> workoutSessions = workoutSessionRepository.findByUserIdWithSets(userId, pageable);
+        Page<WorkoutSessionWithSetsResponse> workoutSessionsRes = workoutSessions.map(workoutSessionMapper::toGetWorkoutSessionFullResponse);
         return workoutSessionsRes;
     }
 
@@ -84,9 +85,9 @@ public class WorkoutSessionService {
 //        return workoutSessionsRes;
 //    }
     @Transactional(readOnly = true)
-    public WorkoutSessionFullResponse getWorkoutSessionByIdAndUserIdWithSets(String workoutId, String userId){
+    public WorkoutSessionWithSetsResponse getWorkoutSessionByIdAndUserIdWithSets(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
-        WorkoutSessionFullResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
+        WorkoutSessionWithSetsResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
         return workoutSessionRes;
     }
 
@@ -127,7 +128,7 @@ public class WorkoutSessionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse startSession(String workoutId, String userId){
+    public WorkoutSessionWithSetsResponse startSession(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() != WorkoutStatus.TO_DO)
             throw new WorkoutIllegalStateException("TAREA YA HA SIDO" + (workoutSession.getStatus() == WorkoutStatus.IN_PROGRESS ? " INICIADA" : " FINALIZADA"));
@@ -141,7 +142,7 @@ public class WorkoutSessionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse endSession(String workoutId, String userId){
+    public WorkoutSessionWithSetsResponse endSession(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() != WorkoutStatus.IN_PROGRESS) throw new WorkoutIllegalStateException("TAREA " + (workoutSession.getStatus() == WorkoutStatus.TO_DO ? "AUN NO HA SIDO INICIADA" : "YA FUE FINALIZADA"));
         Instant endTime = Instant.now();
@@ -154,7 +155,7 @@ public class WorkoutSessionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse resetSession(String workoutId, String userId){
+    public WorkoutSessionWithSetsResponse resetSession(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         if(workoutSession.getStatus() == WorkoutStatus.TO_DO) throw new WorkoutIllegalStateException("TAREA AUN NO HA SIDO INICIADA");
         workoutSession.setEndTime(null);

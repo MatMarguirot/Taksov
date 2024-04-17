@@ -1,11 +1,11 @@
 package com.mat.taksov.workout.service;
 
 import com.mat.taksov.user.model.User;
-import com.mat.taksov.workout.dto.ExerciseSetCreateRequest;
-import com.mat.taksov.workout.dto.ExerciseSetResponse;
-import com.mat.taksov.workout.dto.ExerciseSetsResponse;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetResponse;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
-import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
+import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.mapper.ExerciseSetMapper;
 import com.mat.taksov.workout.dto.mapper.WorkoutSessionMapper;
 import com.mat.taksov.workout.exception.ExerciseNotFoundException;
@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,7 +40,7 @@ public class WorkoutSessionExerciseSetService {
     private final MuscleGroupRepository muscleGroupRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
+    public WorkoutSessionWithSetsResponse createWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, String userId){
         Set<ExerciseSet> exerciseSets;
 
         // referencia de usuario
@@ -97,7 +96,7 @@ public class WorkoutSessionExerciseSetService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public WorkoutSessionFullResponse updateWorkoutSessionExerciseSets(
+    public WorkoutSessionWithSetsResponse updateWorkoutSessionExerciseSets(
             String workoutSessionId,
             String userId,
             List<ExerciseSetCreateRequest> updateExerciseSetsRequest

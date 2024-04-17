@@ -1,7 +1,7 @@
 package com.mat.taksov.workout.service;
 
-import com.mat.taksov.workout.dto.ExerciseBulkDto;
-import com.mat.taksov.workout.dto.ExerciseDto;
+import com.mat.taksov.workout.dto.Exercise.ExerciseBulkDto;
+import com.mat.taksov.workout.dto.Exercise.ExerciseDto;
 import com.mat.taksov.workout.exception.ExerciseNotFoundException;
 import com.mat.taksov.workout.exception.InvalidBulkExerciseException;
 import com.mat.taksov.workout.model.Exercise;

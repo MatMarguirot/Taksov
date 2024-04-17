@@ -1,11 +1,8 @@
-package com.mat.taksov.workout.dto;
+package com.mat.taksov.workout.dto.MuscleGroup;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

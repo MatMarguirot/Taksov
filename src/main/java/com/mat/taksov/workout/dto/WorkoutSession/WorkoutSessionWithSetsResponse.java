@@ -1,8 +1,6 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
-import com.mat.taksov.workout.dto.ExerciseSetResponse;
-import com.mat.taksov.workout.dto.MuscleGroupDto;
-import com.mat.taksov.workout.model.MuscleGroup;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetResponse;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutSessionFullResponse { // implements IWorkoutSessionResponse{
+public class WorkoutSessionWithSetsResponse { // implements IWorkoutSessionResponse{
     private String id;
     private String name;
     private String description;

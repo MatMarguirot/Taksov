@@ -1,18 +1,16 @@
 package com.mat.taksov.workout.controller;
 
 import com.mat.taksov.user.model.User;
-import com.mat.taksov.workout.dto.MuscleGroupBulkDto;
+import com.mat.taksov.workout.dto.MuscleGroup.MuscleGroupBulkDto;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.service.MuscleGroupService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
