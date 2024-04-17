@@ -93,7 +93,7 @@ public class MuscleGroupService {
 
     @Transactional(readOnly = true)
     public List<MuscleGroup> getByWorkoutSessionId(String workoutSessionId){
-        List<MuscleGroup> mgs = muscleGroupRepository.findByWorkoutSessionsId(workoutSessionId);
+        List<MuscleGroup> mgs = muscleGroupRepository.findByWorkoutSessionId(workoutSessionId);
         return mgs;
     }
 

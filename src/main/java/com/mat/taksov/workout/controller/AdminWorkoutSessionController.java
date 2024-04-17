@@ -6,7 +6,6 @@ import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionFullResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
 import com.mat.taksov.workout.service.WorkoutSessionService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -62,7 +60,7 @@ public class AdminWorkoutSessionController {
             @PathVariable("workout_id") String workoutId
     ){
         userSessionService.assertLoggedUser(user, userId);
-        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionByIdAndUserId(workoutId, userId));
+        return ResponseEntity.ok(workoutSessionService.getWorkoutSessionByIdAndUserIdWithSets(workoutId, userId));
     }
 
     @GetMapping(workoutUrlString+"/{workout_id}")

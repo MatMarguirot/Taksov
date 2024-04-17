@@ -84,9 +84,16 @@ public class WorkoutSessionService {
 //        return workoutSessionsRes;
 //    }
     @Transactional(readOnly = true)
-    public WorkoutSessionFullResponse getWorkoutSessionByIdAndUserId(String workoutId, String userId){
+    public WorkoutSessionFullResponse getWorkoutSessionByIdAndUserIdWithSets(String workoutId, String userId){
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         WorkoutSessionFullResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
+        return workoutSessionRes;
+    }
+
+    @Transactional(readOnly = true)
+    public WorkoutSessionResponse getWorkoutSessionByIdAndUserId(String workoutId, String userId){
+        WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
+        WorkoutSessionResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
         return workoutSessionRes;
     }
 
