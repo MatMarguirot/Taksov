@@ -1,6 +1,7 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
 import com.mat.taksov.user.model.Task;
+import com.mat.taksov.workout.dto.MuscleGroupDto;
 import com.mat.taksov.workout.model.MuscleGroup;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 
@@ -47,5 +48,5 @@ public interface IWorkoutSessionResponse {
 
     public Set<MuscleGroup> getMuscleGroups();
 
-    public void setMuscleGroups(Set<MuscleGroup> muscleGroups);
+    public void setMuscleGroups(Set<MuscleGroupDto> muscleGroups);
 }

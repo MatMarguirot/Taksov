@@ -16,6 +16,7 @@ import com.mat.taksov.workout.model.WorkoutSession;
 import com.mat.taksov.workout.model.WorkoutsessionUpdateExerciseSetsRequest;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import com.mat.taksov.workout.repository.WorkoutSessionRepository;
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ import java.util.Set;
 public class WorkoutSessionService {
     private final WorkoutSessionRepository workoutSessionRepository;
     private final WorkoutSessionMapper workoutSessionMapper;
+    private final EntityManager em;
 //    private final WorkoutSessionExerciseSetService workoutSessionExerciseSetService;
 
 
@@ -77,7 +79,15 @@ public class WorkoutSessionService {
         Page<WorkoutSession> workoutSessions;
         if(withSets){
             workoutSessions = workoutSessionRepository.findByUserIdWithSets(userId, pageable);
-        }else workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
+            log.info("test");
+        }else workoutSessions = workoutSessionRepository.findByUserIdWithMuscleGroups(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
+//        }else workoutSessions = workoutSessionRepository.findByUserId(userId, pageable).orElseThrow(NoWorkoutsForUserException::new);
+        workoutSessions.map(
+                (workoutSession) -> {
+                    em.detach(workoutSession);
+                    return workoutSession;
+                }
+        );
         Page<WorkoutSessionResponse> workoutSessionsRes = workoutSessions.map(workoutSessionMapper::toGetWorkoutSessionResponse);
         return workoutSessionsRes;
     }

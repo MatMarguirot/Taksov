@@ -40,6 +40,10 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
     Optional<WorkoutSession> findLatestPendingByUserId(@Param("user_id") String id);
 
     Optional<Page<WorkoutSession>> findByUserId(String userId, Pageable pageable);
+
+    @Query("SELECT w FROM WorkoutSession w LEFT JOIN FETCH w.muscleGroups WHERE w.user.id = :user_id")
+    Optional<Page<WorkoutSession>> findByUserIdWithMuscleGroups(@Param("user_id") String userId, Pageable pageable);
+
     Optional<List<WorkoutSession>> findByUserId(String userId);
 
     Page<WorkoutSession> findByStatusAndUserId(WorkoutStatus status, String userId, Pageable pageable);

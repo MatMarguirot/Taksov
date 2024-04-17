@@ -58,8 +58,8 @@ public class WorkoutSessionController {
             @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets
     ){
         if(withSets){
+            // cuando se busca con sets, solo obtiene un resultado
             pageable = PageRequest.of(pageable.getPageNumber(), 1, pageable.getSort());
-            workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable, withSets);
         }
         return ResponseEntity.ok(workoutSessionService.getWorkoutSessionsByUser(user.getId(), pageable, withSets));
     }

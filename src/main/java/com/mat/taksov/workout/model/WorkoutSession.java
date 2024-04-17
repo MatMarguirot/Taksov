@@ -1,6 +1,7 @@
 package com.mat.taksov.workout.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
@@ -54,6 +55,9 @@ public class WorkoutSession implements Serializable {
 
     private Duration duration;
 
+    @CreationTimestamp
+    private Instant created;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "workout_session_muscle_group",
@@ -62,8 +66,7 @@ public class WorkoutSession implements Serializable {
     )
     private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
-    @CreationTimestamp
-    private Instant created;
+
 
     public void calculateAndSetDuration(){
         if(startTime != null && endTime != null && startTime.isBefore(endTime)){
