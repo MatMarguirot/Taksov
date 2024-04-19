@@ -13,6 +13,7 @@ import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import com.mat.taksov.workout.repository.WorkoutSessionRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.jdbc.Work;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

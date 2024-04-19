@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -76,30 +77,40 @@ public class WorkoutSession implements Serializable {
         }
     }
 
-    public void setExerciseSets(Set<ExerciseSet> exerciseSets){ // maybe not use setter
-        try {
-            if(exerciseSets.isEmpty()){
-            this.exerciseSets = exerciseSets;
-            }else{
-                this.exerciseSets.clear();
-                this.exerciseSets.addAll(exerciseSets);
-            }
-//            updateMuscleGroups();
-
-        }catch (Exception e) {
-            throw e;
-        }
-    }
+//    public void setExerciseSets(Set<ExerciseSet> exerciseSets){ // maybe not use setter
+//        try {
+//            if(exerciseSets.isEmpty()){
+//            this.exerciseSets = exerciseSets;
+//            }else{
+//                this.exerciseSets.clear();
+//                this.exerciseSets.addAll(exerciseSets);
+//            }
+////            updateMuscleGroups();
+//
+//        }catch (Exception e) {
+//            throw e;
+//        }
+//    }
 
     public void addExerciseSet(ExerciseSet exerciseSet){
         exerciseSets.add(exerciseSet);
-//        updateMuscleGroups();
+        exerciseSet.setWorkoutSession(this);
     }
 
-//    public void addMuscleGroup(MuscleGroup muscleGroup){
-//        if(this.muscleGroups.contains(muscleGroup)) return;
-//        this.muscleGroups.add(muscleGroup);
-//    }
+    public void removeExerciseSet(ExerciseSet exerciseSet){
+        exerciseSets.remove(exerciseSet);
+        exerciseSet.setWorkoutSession(null);
+    }
+
+    public void setExerciseSets(Set<ExerciseSet> exerciseSets){
+        this.exerciseSets = exerciseSets
+                .stream()
+                .map(exerciseSet -> {
+                    exerciseSet.setWorkoutSession(this);
+                    return exerciseSet;
+                })
+                .collect(Collectors.toSet());
+    }
 
     public void setEndTime(Instant endTime){
         if(this.startTime == null) return;

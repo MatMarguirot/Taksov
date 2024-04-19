@@ -43,6 +43,10 @@ public class ExerciseService {
         return exerciseDtoList;
     }
 
+    public Exercise getExerciseRef(String exerciseId){
+        return exerciseRepository.getReferenceById(exerciseId);
+    }
+
 //    public List<Exercise> findAllByMuscleGroupId(String muscleGroupId) {
 //        return exerciseRepository.findAllByMuscleGroupId(muscleGroupId).orElseThrow(ExerciseNotFoundException::new);
 //    }

@@ -1,5 +1,6 @@
 package com.mat.taksov.workout.dto.WorkoutSession;
 
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
 import jakarta.annotation.Nullable;

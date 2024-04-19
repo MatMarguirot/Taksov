@@ -4,17 +4,31 @@ import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
+import com.mat.taksov.workout.model.ExerciseSet;
 import com.mat.taksov.workout.model.WorkoutSession;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @AllArgsConstructor
 @Service
 public class WorkoutSessionMapper {
     private final ModelMapper modelMapper;
+    private final ExerciseSetMapper exerciseSetMapper;
 
     public WorkoutSession toWorkoutSession(WorkoutSessionCreateRequest workoutSessionCreateRequest, User user) {
+        // mapear sets
+//        Set<ExerciseSet> exerciseSets =
+//                !workoutSessionCreateRequest.getExerciseSets().isEmpty() ?
+//                        workoutSessionCreateRequest.getExerciseSets()
+//                                .stream()
+//                                .map(exerciseSetMapper::toExerciseSet)
+//                                .collect(Collectors.toSet())
+//                        : null;
+
         // si tiene sets, deben estar asociados correctamente por WorkoutSessionId
         WorkoutSession workoutSession = modelMapper.map(workoutSessionCreateRequest, WorkoutSession.class);
         workoutSession.setUser(user);
