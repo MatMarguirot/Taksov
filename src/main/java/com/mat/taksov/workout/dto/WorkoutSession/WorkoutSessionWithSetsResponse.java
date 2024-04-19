@@ -2,6 +2,7 @@ package com.mat.taksov.workout.dto.WorkoutSession;
 
 import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetResponse;
 import com.mat.taksov.workout.model.enums.WorkoutStatus;
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,8 @@ public class WorkoutSessionWithSetsResponse { // implements IWorkoutSessionRespo
 //    private User user;
     private Duration duration;
     private Set<ExerciseSetResponse> exerciseSets;
+    @Nullable
+    private Instant created;
 //    private Set<MuscleGroupDto> muscleGroups;
 }
 

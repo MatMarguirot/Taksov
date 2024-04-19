@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class ExerciseSetResponse {
     private long weight;
     private long reps;
     private String workoutSessionId = "";
-    private Date created;
+    private Instant created;
 //    private String muscleGroup;
 //    private MuscleGroup muscleGroups;
 }

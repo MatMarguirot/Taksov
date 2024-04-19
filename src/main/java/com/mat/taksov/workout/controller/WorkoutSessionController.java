@@ -163,7 +163,7 @@ public class WorkoutSessionController {
     }
 
     @GetMapping("/current") // changes
-    public ResponseEntity<WorkoutSessionResponse> getCurrentWorkout(
+    public ResponseEntity<WorkoutSessionWithSetsResponse> getCurrentWorkout(
             @AuthenticationPrincipal User user,
             @RequestParam(name = "withSets", required = false, defaultValue = "false") boolean withSets
     ){

@@ -32,7 +32,7 @@ public class ExerciseSetService {
             String userId
     ){
 
-        // obtiene referencia
+        // obtiene referencia de WorkoutSession
         WorkoutSession workoutSession = workoutSessionService.getWorkoutSessionModelByIdAndUserId(workoutSessionId, userId);
 
         // llama al servicio de ejercicio para crear el ejercicio si no existe
@@ -41,13 +41,6 @@ public class ExerciseSetService {
         ExerciseSet exerciseSet = exerciseSetMapper.toExerciseSet(exerciseSetCreateRequest, exercise);
         exerciseSet.setWorkoutSession(workoutSession);
         ExerciseSet createdExerciseSet = exerciseSetRepository.save(exerciseSet);
-
-        // actualiza workoutSession
-        workoutSession.addExerciseSet(createdExerciseSet);
-        workoutSessionService.updateWorkoutSession(workoutSession);
-//        exerciseSet.setWorkoutSession(workoutSession);
-
-//        workoutSessionService.updateWorkoutSessionMuscleGroup(workoutSession, exerciseSet.getExercise().getMuscleGroup());
 
         return exerciseSetMapper.toGetExerciseSetResponse(createdExerciseSet);
     }

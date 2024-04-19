@@ -25,8 +25,9 @@ public class WorkoutSessionCreateRequest {
     private Instant endTime = null;
     private WorkoutStatus status = WorkoutStatus.TO_DO;
     @Nullable
-    private Set<ExerciseSet> exerciseSets;
+    private Set<ExerciseSetCreateRequest> exerciseSets;
     private String user_id;
     private Duration duration = Duration.ZERO;
-//    private Set<MuscleGroupDto> muscleGroups = new HashSet<>();
+    @Nullable
+    private Instant created;
 }

@@ -68,14 +68,14 @@ public class WorkoutSessionService {
         return workoutSessionsRes;
     }
 
-    public WorkoutSessionResponse getLatestPendingWorkoutSession(String userId, boolean withSets){
+    public WorkoutSessionWithSetsResponse getLatestPendingWorkoutSession(String userId, boolean withSets){
         WorkoutSession workoutSession;
         if (withSets) {
 //            workoutSession = workoutSessionRepository.findLatestWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
             // no trae el que necesito
             workoutSession = workoutSessionRepository.findLatestPendingWorkoutByUserIdWithSets(userId).orElseThrow(WorkoutNotFoundException::new);
         }else workoutSession = workoutSessionRepository.findLatestWorkoutByUserId(userId).orElseThrow(WorkoutNotFoundException::new);
-        return this.workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
+        return this.workoutSessionMapper.toGetWorkoutSessionFullResponse(workoutSession);
     }
 
 
