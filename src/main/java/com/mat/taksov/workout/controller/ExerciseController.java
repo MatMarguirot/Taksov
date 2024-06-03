@@ -35,8 +35,8 @@ public class ExerciseController {
 
     @DeleteMapping("/deleteAll")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> deleteAllExercises(){
+    public ResponseEntity<MessageResponseDto> deleteAllExercises(){
         exerciseService.deleteAll();
-        return ResponseEntity.ok("Ejercicios borrados con exito");
+        return ResponseEntity.ok(new MessageResponseDto("Ejercicios borrados con exito"));
     }
 }

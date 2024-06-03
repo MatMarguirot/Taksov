@@ -23,9 +23,9 @@ spring:
         format-sql: true
     database: mysql
 #    database-platform: org.hibernate.dialect.MySQL8Dialect
-  management:
+
     endpoints:
-      enabled-by-default: false
+      enabled-by-default: true
   security:
     cors:
       allowed-origins: ${ALLOWED_ORIGINS}
@@ -46,7 +46,13 @@ logging:
         transaction: trace
         web.cors: debug
         web: debug
-
+management:
+    endpoints:
+      web:
+        exposure.include: "*"
+#        base-path: "/admin-actuator"
+    health:
+      show-details: always
 
 ##updates database schema when changing the entity
 #spring.jpa.hibernate.ddl-auto=update

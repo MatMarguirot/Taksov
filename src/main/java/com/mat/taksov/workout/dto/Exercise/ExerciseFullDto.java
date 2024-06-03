@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExerciseDto {
+public class ExerciseFullDto {
     @Nullable
     private String id;
     @NotNull
@@ -20,6 +20,5 @@ public class ExerciseDto {
     private String name;
     @JsonAlias("muscle_group")
     @NotNull
-    private String muscleGroupId;
-//    private MuscleGroupDto muscleGroup;
+    private MuscleGroupDto muscleGroup;
 }

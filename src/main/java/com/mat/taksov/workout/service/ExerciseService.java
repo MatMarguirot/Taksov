@@ -64,25 +64,25 @@ public class ExerciseService {
         return exerciseRepository.findByName(name);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public Exercise findOrCreateExerciseModelByExerciseDto(ExerciseDto exerciseDto) {
-        // si lo encuentra lo obtiene
-        if(exerciseRepository.existsByName(exerciseDto.getName())) return exerciseRepository.findByName(exerciseDto.getName());
-
-        // crea nuevo ejercicio
-        Exercise exercise = new Exercise();
-        exercise.setName(exerciseDto.getName());
-
-        //obtiene o crea musclegroup
-        MuscleGroup muscleGroup = muscleGroupService.findOrCreateMuscleGroupModelByName(exerciseDto.getMuscleGroup().getName());
-
-        //inserta ejercicio con referencia a muscle group encontrado/nuevo
-        exercise.setMuscleGroup(muscleGroup);
-
-        Exercise newExercise = exerciseRepository.save(exercise);
-        return newExercise;
-//        return exerciseRepository.save(exercise);
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    public Exercise findOrCreateExerciseModelByExerciseDto(ExerciseDto exerciseDto) {
+//        // si lo encuentra lo obtiene
+//        if(exerciseRepository.existsByName(exerciseDto.getName())) return exerciseRepository.findByName(exerciseDto.getName());
+//
+//        // crea nuevo ejercicio
+//        Exercise exercise = new Exercise();
+//        exercise.setName(exerciseDto.getName());
+//
+////        //obtiene o crea musclegroup
+////        MuscleGroup muscleGroup = muscleGroupService.findOrCreateMuscleGroupModelByName(exerciseDto.getMuscleGroup().getName());
+//
+//        //inserta ejercicio con referencia a muscle group encontrado/nuevo
+//        exercise.setMuscleGroup(muscleGroup);
+//
+//        Exercise newExercise = exerciseRepository.save(exercise);
+//        return newExercise;
+////        return exerciseRepository.save(exercise);
+//    }
 
     @Transactional(rollbackFor = Exception.class)
     public List<Exercise> createBulkExercise(List<ExerciseBulkDto> exercisesDto){

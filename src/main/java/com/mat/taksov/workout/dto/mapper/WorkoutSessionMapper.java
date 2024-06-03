@@ -1,6 +1,7 @@
 package com.mat.taksov.workout.dto.mapper;
 
 import com.mat.taksov.user.model.User;
+import com.mat.taksov.workout.dto.ExerciseSet.ExerciseSetCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionCreateRequest;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionWithSetsResponse;
 import com.mat.taksov.workout.dto.WorkoutSession.WorkoutSessionResponse;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class WorkoutSessionMapper {
 //                        : null;
 
         // si tiene sets, deben estar asociados correctamente por WorkoutSessionId
+        if(workoutSessionCreateRequest.getExerciseSets() == null) workoutSessionCreateRequest.setExerciseSets(new HashSet<ExerciseSetCreateRequest>());
         WorkoutSession workoutSession = modelMapper.map(workoutSessionCreateRequest, WorkoutSession.class);
         workoutSession.setUser(user);
         return workoutSession;

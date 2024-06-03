@@ -48,8 +48,12 @@ public class SecurityConfig {
                                         "/v3/api-docs/**",
                                         "/bus/v3/api-docs/**",
                                         "/swagger-ui/**",
-                                        "/swagger-ui.html").permitAll()
-                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                        "/swagger-ui.html",
+                                        "/actuator",
+                                        "/actuator/**"
+                                        ).permitAll()
+                                .requestMatchers(
+                                        "/admin/**").hasAuthority("ADMIN")
 //                                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())// requiere que el enum tenga ROLE_ADMIN, usar hasAuthority
                                 .anyRequest().authenticated()
                         )
