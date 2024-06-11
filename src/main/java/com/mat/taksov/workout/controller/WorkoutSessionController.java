@@ -3,6 +3,7 @@ package com.mat.taksov.workout.controller;
 import com.mat.taksov.authentication.service.UserSessionService;
 import com.mat.taksov.user.model.User;
 import com.mat.taksov.workout.dto.WorkoutSession.*;
+import com.mat.taksov.workout.model.WorkoutSession;
 import com.mat.taksov.workout.service.WorkoutSessionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -12,12 +13,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.util.List;
+
 @RequiredArgsConstructor
-@RequestMapping("/workout")
+@RequestMapping("/workouts")
 @RestController
 @Tag(name = "WorkoutSession Management (user)")
 public class WorkoutSessionController {
@@ -65,6 +70,12 @@ public class WorkoutSessionController {
             @PathVariable("workout_id") String workoutId
     ){
         return ResponseEntity.ok(workoutSessionService.getWorkoutSessionByIdAndUserId(workoutId, user.getId()));
+    }
+
+    @GetMapping("/since")
+    public List<WorkoutSessionResponse> getSessionsByEndTime(
+            @RequestParam("end_time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant endTime) {
+        return workoutSessionService.getSessionsByEndTime(endTime);
     }
 
     @DeleteMapping("/clear")

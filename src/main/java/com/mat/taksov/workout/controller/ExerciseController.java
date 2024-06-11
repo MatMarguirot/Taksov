@@ -1,5 +1,6 @@
 package com.mat.taksov.workout.controller;
 
+import com.mat.taksov.common.dto.MessageResponseDto;
 import com.mat.taksov.workout.dto.Exercise.ExerciseBulkDto;
 import com.mat.taksov.workout.dto.Exercise.ExerciseDto;
 import com.mat.taksov.workout.model.Exercise;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/exercise")
+@RequestMapping("/exercises")
 @RestController
 @EnableMethodSecurity
 @Tag(name = "Exercise Management")

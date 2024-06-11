@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,5 +59,12 @@ public class WorkoutSessionMapper {
         WorkoutSessionResponse res = modelMapper.map(workoutSession, WorkoutSessionResponse.class);
         res.setUserId(workoutSession.getUser().getId());
         return res;
+    }
+
+    public List<WorkoutSessionResponse> toWorkoutSessionResponseList(List<WorkoutSession> workoutSessions){
+        return workoutSessions
+                .stream()
+                .map(this::toGetWorkoutSessionResponse)
+                .toList();
     }
 }

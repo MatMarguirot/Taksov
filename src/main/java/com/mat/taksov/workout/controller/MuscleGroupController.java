@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RequestMapping("/muscle_group")
+@RequestMapping("/muscle_groups")
 @RestController
 @EnableMethodSecurity
 @Tag(name = "MuscleGroup Management")

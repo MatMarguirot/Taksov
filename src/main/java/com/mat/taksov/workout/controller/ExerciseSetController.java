@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @AllArgsConstructor
-@RequestMapping("/user/{user_id}/workout/{workout_id}/exercise_set")
+@RequestMapping("/users/{user_id}/workouts/{workout_id}/exercise_sets")
 @RestController
 @Tag(name = "ExerciseSet Management")
 public class ExerciseSetController {

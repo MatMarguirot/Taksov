@@ -87,6 +87,10 @@ public class AdminUserService {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
+    public User getUserReference(String userId){
+        return userRepository.getReferenceById(userId);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public String updateUser(String id, AdminUpdateUserDto updateUserDto) {
             User user = userRepository.findById(id).orElseThrow(() -> {

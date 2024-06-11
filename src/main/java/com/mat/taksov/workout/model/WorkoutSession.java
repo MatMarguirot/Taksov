@@ -59,16 +59,6 @@ public class WorkoutSession implements Serializable {
     @CreationTimestamp
     private Instant created;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "workout_session_muscle_group",
-//            joinColumns = @JoinColumn(name = "workout_session_id"),
-//            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
-//    )
-//    private Set<MuscleGroup> muscleGroups = new HashSet<>();
-
-
-
     public void calculateAndSetDuration(){
         if(startTime != null && endTime != null && startTime.isBefore(endTime)){
             this.duration = Duration.between(startTime, endTime);
@@ -76,6 +66,15 @@ public class WorkoutSession implements Serializable {
             throw new IllegalArgumentException("LA FECHA DE INICIO NO PUEDE SER MAYOR A LA FECHA DE TERMINO");
         }
     }
+
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "workout_session_muscle_group",
+//            joinColumns = @JoinColumn(name = "workout_session_id"),
+//            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
+//    )
+//    private Set<MuscleGroup> muscleGroups = new HashSet<>();
 
 //    public void setExerciseSets(Set<ExerciseSet> exerciseSets){ // maybe not use setter
 //        try {

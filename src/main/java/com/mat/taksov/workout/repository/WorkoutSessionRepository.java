@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,4 +59,9 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
 
     void deleteByUserId(String userId);
 
+//    @Query("SELECT w FROM WorkoutSession w WHERE w.endTime >= :endTime")
+//    List<WorkoutSession> findAllByEndTimeAfter(@Param("endTime") Instant endTime);
+
+    @Query("SELECT w FROM WorkoutSession w WHERE w.endTime >= :endTime ORDER BY w.endTime ASC")
+    List<WorkoutSession> findAllByEndTimeAfter(@Param("endTime") Instant endTime);
 }

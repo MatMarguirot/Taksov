@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
@@ -97,6 +99,12 @@ public class WorkoutSessionService {
         WorkoutSession workoutSession = workoutSessionRepository.findByIdAndUserId(workoutId, userId).orElseThrow(WorkoutNotFoundException::new);
         WorkoutSessionResponse workoutSessionRes = workoutSessionMapper.toGetWorkoutSessionResponse(workoutSession);
         return workoutSessionRes;
+    }
+
+    // cambiiar a pageable luego
+    public List<WorkoutSessionResponse> getSessionsByEndTime(Instant endTime) {
+        List<WorkoutSessionResponse> workoutSessions = workoutSessionMapper.toWorkoutSessionResponseList(workoutSessionRepository.findAllByEndTimeAfter(endTime));
+        return workoutSessions;
     }
 
 
